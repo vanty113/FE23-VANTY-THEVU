@@ -1,0 +1,27 @@
+.sc-show-brands {
+    display: flex;
+    width: 100%;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    border-bottom: solid 2px #FFFFFF;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .sc-brands {
+    flex: 1 0;
+        p {
+            font-size: 15px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 10px;
+            color: #FFFFFF;
+        }
+        li {
+            text-align: left;
+            font-size: 13px;
+            list-style: none;
+            line-height: 20px;
+            color: #FFFFFF;
+        }
+    }
+}

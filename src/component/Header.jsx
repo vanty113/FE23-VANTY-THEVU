@@ -1,16 +1,17 @@
-import { Badge, Menu, Button} from "@material-ui/core";
+import { Badge, Menu, Button } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import {React, useState} from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
-import Logos from '../assets/22287b12fd32444c91691048bbf6b877.png';
+import Logos from '../assets/runnerinn.svg';
 
 const Container = styled.div`
     height: auto;
-    width: 100vw;
-    background: #F4F4F5;
+    width: 100%;
+    background: #045792;
 `;
 
 const Wrapper = styled.div`
+    color: white;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -64,11 +65,13 @@ const Logo = styled.img`
 
 const MenuItem = styled.div`
     font-size: 17px;
+    color: white;
     cursor: pointer;
     margin-left: 25px;
 `;
 
-const Navbar = () => {
+
+const NavBar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -83,7 +86,7 @@ const Navbar = () => {
         <Container>
             <Wrapper>
                 <Left>
-                    <Logo src={Logos}/>
+                    <Logo src={Logos} />
                 </Left>
                 <Center>
                     <Language>EN</Language>
@@ -102,7 +105,7 @@ const Navbar = () => {
                     </MenuItem>
                 </Right>
             </Wrapper>
-            <Wrapper style={{background: '#ae96b3'}}>
+            <Wrapper style={{ background: '#045792' }}>
                 <Button
                     id="demo-positioned-button"
                     aria-controls={open ? 'demo-positioned-menu' : undefined}
@@ -132,15 +135,15 @@ const Navbar = () => {
                     <MenuItem onClick={handleClose}>Nike</MenuItem>
                     <MenuItem onClick={handleClose}>Puma</MenuItem>
                 </Menu>
-                    <MenuItem>Home</MenuItem>
-                    <MenuItem>Men's shoes</MenuItem>
-                    <MenuItem>Women's shoes</MenuItem>
-                    <MenuItem>Men's clothing</MenuItem>
-                    <MenuItem>Women's clothing</MenuItem>
-                    <MenuItem>Hot deals!</MenuItem>
+                <MenuItem>Home</MenuItem>
+                <MenuItem>Men's shoes</MenuItem>
+                <MenuItem>Women's shoes</MenuItem>
+                <MenuItem>Men's clothing</MenuItem>
+                <MenuItem>Women's clothing</MenuItem>
+                <MenuItem>Hot deals!</MenuItem>
             </Wrapper>
         </Container>
     );
 };
 
-export default Navbar;
+export default NavBar;

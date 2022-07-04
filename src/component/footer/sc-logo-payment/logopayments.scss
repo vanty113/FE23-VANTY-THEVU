@@ -1,0 +1,22 @@
+.sc-logo-payment {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+.sc-copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    p {
+        color: #FFFFFF;
+        text-align: left;
+        line-height: 16px;
+        font-size: 13px;
+        margin-left: 50px;
+    }
+}
