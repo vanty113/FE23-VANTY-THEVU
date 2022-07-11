@@ -84,8 +84,6 @@ const Header = () => {
         setAnchorEl(null);
     };
 
-    const showSignin = () => setIsSignin(!isSignin);
-
     return (
         <Container>
             <Wrapper>
@@ -101,7 +99,7 @@ const Header = () => {
                 </Center>
                 <Right>
                     <Link style={{ textDecoration: "none"}} to='/register'><MenuItem>REGISTER</MenuItem></Link>
-                    <MenuItem>SIGN IN</MenuItem>
+                    <Link style={{ textDecoration: "none"}} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
                     <MenuItem>
                         <Badge badgeContent={2} color="primary">
                             <ShoppingCartOutlined />

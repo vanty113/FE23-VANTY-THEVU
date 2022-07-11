@@ -18,7 +18,7 @@ function* login(action) {
         const loginPayload = action.payload
         console.log(action.payload);
         const response = yield AuthAPI.login({
-            email: loginPayload.username,
+            email: loginPayload.email,
             password: loginPayload.password,
         });
         console.log(response.data.user);

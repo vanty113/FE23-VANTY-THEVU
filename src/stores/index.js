@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware()
 const middleware = [ sagaMiddleware ];
 
 const rootReducer = {
-    user: userReducer
+    users: userReducer
 }
 
 export const appStore = configureStore({

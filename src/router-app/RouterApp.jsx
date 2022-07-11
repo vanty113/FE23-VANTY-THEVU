@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 // import { Register } from "feature/register/Register";
 import * as React from "react";
 import loadable from "@loadable/component";
+import { Login } from "feature/Login/Login";
 // import { HomePage } from "feature/homepage/HomePage";
 
 // const HomePage = loadable(() => import('feature/homepage/HomePage'));
@@ -19,7 +20,7 @@ export function RouterApp() {
                 index
                 element={<HomePage />}
             />
-            {/* <Route path="/" element={<HomePage />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
         </Routes>
     )

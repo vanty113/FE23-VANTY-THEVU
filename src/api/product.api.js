@@ -1,6 +1,6 @@
-import { API } from "./const.api";
+import { API, URL_API } from "./const.api";
 
 
 export const ProductAPI = {
-    getProducts: (data) => API.post(`${URL_API}/products`, data)
+    getProducts: (data) => API.post(`${URL_API}/api/products`, data)
 }
