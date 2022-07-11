@@ -2,16 +2,19 @@ import { Badge, Menu, Button } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import { React, useState } from "react";
 import styled from "styled-components";
-import Logos from '../assets/runnerinn.svg';
+import Logos from 'assets/runnerinn.svg';
+import { Link } from "react-router-dom";
+
+
 
 const Container = styled.div`
     height: auto;
     width: 100%;
-    background: #045792;
+    background: #6596B6;
 `;
 
 const Wrapper = styled.div`
-    color: white;
+    color: #FFFFFF;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -65,13 +68,13 @@ const Logo = styled.img`
 
 const MenuItem = styled.div`
     font-size: 17px;
-    color: white;
+    color: #FFFFFF;
     cursor: pointer;
     margin-left: 25px;
 `;
 
 
-const NavBar = () => {
+const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -81,12 +84,13 @@ const NavBar = () => {
         setAnchorEl(null);
     };
 
+    const showSignin = () => setIsSignin(!isSignin);
 
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <Logo src={Logos} />
+                    <Link to="/"><Logo src={Logos} /></Link>
                 </Left>
                 <Center>
                     <Language>EN</Language>
@@ -96,7 +100,7 @@ const NavBar = () => {
                     </SearchContainer>
                 </Center>
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
+                    <Link style={{ textDecoration: "none"}} to='/register'><MenuItem>REGISTER</MenuItem></Link>
                     <MenuItem>SIGN IN</MenuItem>
                     <MenuItem>
                         <Badge badgeContent={2} color="primary">
@@ -105,8 +109,9 @@ const NavBar = () => {
                     </MenuItem>
                 </Right>
             </Wrapper>
-            <Wrapper style={{ background: '#045792' }}>
+            <Wrapper style={{ background: '#6596B6' }}>
                 <Button
+                    style={{ color: '#FFFFFF' }}
                     id="demo-positioned-button"
                     aria-controls={open ? 'demo-positioned-menu' : undefined}
                     aria-haspopup="true"
@@ -135,7 +140,7 @@ const NavBar = () => {
                     <MenuItem onClick={handleClose}>Nike</MenuItem>
                     <MenuItem onClick={handleClose}>Puma</MenuItem>
                 </Menu>
-                <MenuItem>Home</MenuItem>
+                <Link style={{ textDecoration: "none"}} to="/"><MenuItem>Home</MenuItem></Link>
                 <MenuItem>Men's shoes</MenuItem>
                 <MenuItem>Women's shoes</MenuItem>
                 <MenuItem>Men's clothing</MenuItem>
@@ -146,4 +151,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default Header;

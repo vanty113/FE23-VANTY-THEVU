@@ -1,0 +1,37 @@
+.register-page {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 540px;
+    height: 570px;
+    margin: auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
+
+    p {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .errors-message {
+        display: flex;
+        justify-content: space-evenly;
+        color: red;
+        font-size: 13px;
+    }
+
+    .width-input {
+        input {
+            width: 400px;
+        }
+    }
+
+    input,
+    select {
+        margin: 5px;
+        padding: 6px 8px;
+        font-size: 15px;
+    }
+    .btn-submit {
+        margin-top: 30px;
+    }
+}
