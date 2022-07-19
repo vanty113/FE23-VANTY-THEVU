@@ -1,5 +1,5 @@
 .register-page {
-    border: 1px solid black;
+    border: 2px solid #6596B6;
     border-radius: 5px;
     width: 540px;
     height: 570px;
@@ -30,8 +30,26 @@
         margin: 5px;
         padding: 6px 8px;
         font-size: 15px;
+        outline: none;
+
+        &:focus {
+            border: 2px solid #6596B6;
+            border-radius: 5px;
+        }
     }
+
     .btn-submit {
         margin-top: 30px;
+        color: #FFFFFF;
+        width: 120px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 10px 8px;
+        &:hover {
+            box-shadow: 5px 5px 5px 5px #6596B6;
+            color: red;
+        }
+
     }
 }

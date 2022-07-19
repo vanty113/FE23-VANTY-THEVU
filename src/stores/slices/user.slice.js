@@ -20,7 +20,7 @@ const userSlice = createSlice({
             localStorage.removeItem(USER_INFO_KEY)
             state.userInfoState = {
                 ...state.userInfoState,
-                loading: true
+                loading: true,
             }
         },
         loginActionSuccess(state, action) {

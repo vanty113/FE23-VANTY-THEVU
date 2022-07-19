@@ -4,6 +4,8 @@ import { React, useState } from "react";
 import styled from "styled-components";
 import Logos from 'assets/runnerinn.svg';
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutAction } from "stores/slices/user.slice";
 
 
 
@@ -15,7 +17,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     color: #FFFFFF;
-    padding: 10px 20px;
+    padding: 10px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,6 +60,7 @@ const SearchContainer = styled.div`
 const Input = styled.input`
     border: none;
     width: 90%;
+    outline: none;
 `;
 
 
@@ -75,6 +78,18 @@ const MenuItem = styled.div`
 
 
 const Header = () => {
+    const userInfo = useSelector(state => state.users.userInfoState);
+    const dispatch = useDispatch();
+    const user = userInfo.data;
+
+    const [showLogout, setShowLogout] = useState(false);
+    const onShowLogout = () => {
+        setShowLogout(!showLogout)
+    }
+    const handleLogout = () => {
+        dispatch(logoutAction());
+    }
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -98,11 +113,14 @@ const Header = () => {
                     </SearchContainer>
                 </Center>
                 <Right>
-                    <Link style={{ textDecoration: "none"}} to='/register'><MenuItem>REGISTER</MenuItem></Link>
-                    <Link style={{ textDecoration: "none"}} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
+                    {user ? <MenuItem onClick={onShowLogout}>{user.email} {showLogout && <Button style={{ color: '#FFFFFF', border: '2px solid #1890ff', background:'#1890ff'}} onClick={handleLogout}>LOG OUT</Button>}</MenuItem>
+                    : <>
+                        <Link style={{ textDecoration: "none" }} to='/register'><MenuItem>REGISTER</MenuItem></Link>
+                        <Link style={{ textDecoration: "none" }} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
+                    </>}
                     <MenuItem>
                         <Badge badgeContent={2} color="primary">
-                            <ShoppingCartOutlined />
+                            <ShoppingCartOutlined style={{ fontSize: "35px" }}/>
                         </Badge>
                     </MenuItem>
                 </Right>
@@ -138,10 +156,10 @@ const Header = () => {
                     <MenuItem onClick={handleClose}>Nike</MenuItem>
                     <MenuItem onClick={handleClose}>Puma</MenuItem>
                 </Menu>
-                <Link style={{ textDecoration: "none"}} to="/"><MenuItem>Home</MenuItem></Link>
+                <Link style={{ textDecoration: "none" }} to="/"><MenuItem>Home</MenuItem></Link>
                 <MenuItem>Men's shoes</MenuItem>
                 <MenuItem>Women's shoes</MenuItem>
-                <MenuItem>Men's clothing</MenuItem>
+                <Link style={{ textDecoration: "none" }} to="/mens-clothing"><MenuItem>Men's clothing</MenuItem></Link>
                 <MenuItem>Women's clothing</MenuItem>
                 <MenuItem>Hot deals!</MenuItem>
             </Wrapper>

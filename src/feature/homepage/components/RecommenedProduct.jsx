@@ -1,11 +1,11 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { sliderData } from "constant/SilderData";
 
 const Container = styled.div`
-    width: 100%;
-    height: 450px;
+    width: 99%;
+    margin: auto;
+    height: 420px;
     display: flex;
     position: relative;
     overflow: hidden;
@@ -22,8 +22,8 @@ const Arrow = styled.div`
     position: absolute;
     top: 0;
     bottom: 0;
-    left: ${(props) => props.direction === "left" && "10px"};
-    right: ${(props) => props.direction === "right" && "10px"};
+    left: ${(props) => props.direction === "left" && "-17px"};
+    right: ${(props) => props.direction === "right" && "-17px"};
     margin: auto;
     cursor: pointer;
     opacity: 0.5;
@@ -31,121 +31,99 @@ const Arrow = styled.div`
 `;
 
 const Wrapper = styled.div`
+    width: calc(200% + 30px);
     height: 100%;
     display: flex;
-    position: relative;
     transition: all 1.5s ease;
     transform: translateX(${(props) => props.slideIndex * -100}vw);
 `;
 
 const Slide = styled.div`
-    width: 100vw;
+    width: 20vw;
+    overflow-wrap: anywhere;
     display: flex;
-    position: relative;
     align-items: center;
+    justify-content: center;
     background-color: #${(props) => props.bg};
 `;
 
 const ImgContainer = styled.div`
     height: 100%;
+    width: 90%;
+    cursor: pointer;
     position: relative;
 `;
 
 const Image = styled.img`
     width: 100%;
-    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
 `;
 
 const InfoContainer = styled.div`
     color: #e0e3db;
-    top: 50%;
-    left: 50%;
+    top: 85%;
+    left: 45%;
     position: absolute;
     transform: translate(-42%, -52%);
 `;
 
 const Title = styled.h1`
-    font-size: 49px;
-    color: white;
-`;
-
-const Desc = styled.p`
-    font-size: 15px;
+    color: #000;
+    font-size: 14px;
     font-weight: 500;
 `;
 
-const Button = styled.button`
-    padding: 10px;
-    font-size: 20px;
-    background-color: #1890ff;
-    cursor: pointer;
-    border: 1px solid #7a7575;
-    border-radius: 10px;
-    color: #FFFFFF;
+const Desc = styled.p`
+    font-size: 16px;
+    color: #ff652e;
+    font-weight: bold;
 `;
 
-const delay = 3000;
+const P = styled.p`
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 40px;
+`;
 
-const Slider = () => {
+const RecommenedProduct = ({ recommenedProduct }) => {
     const [slideIndex, setSlideIndex] = useState(0);
-    const timeoutRef = useRef(null);
-    
-    function resetTimeout() {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-    }
-
-    useEffect(() => {
-        resetTimeout();
-        timeoutRef.current = setTimeout(
-            () =>
-            setSlideIndex((prevIndex) =>
-                    prevIndex === slideIndex.length - 1 ? 0 : prevIndex + 1
-                ),
-            delay
-        );
-        if (slideIndex === 3) {
-            setSlideIndex(0)
-        }
-        return () => {
-            resetTimeout();
-        };
-    }, [slideIndex]);
 
     const handleClick = (direction) => {
         if (direction === "left") {
-            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+            setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 0);
         } else {
-            setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+            setSlideIndex(slideIndex < 1 ? slideIndex + 1 : 1);
         }
     };
 
-    return (
+    return (<div>
+        <P>RECOMMENDED FOR YOU</P>
         <Container>
             <Arrow direction="left" onClick={() => handleClick("left")}>
-                <ArrowLeftOutlined />
+                <ArrowLeftOutlined style={{ fontSize: "50px" }} />
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
-                {sliderData.map((item) => (
-                    <Slide bg={item.bg} key={item.id}>
+                {recommenedProduct.map((item) => (
+                    <Slide key={item.id}>
                         <ImgContainer>
                             <Image src={item.img} />
                             <InfoContainer>
-                                <Title>{item.title}</Title>
-                                <Desc>{item.desc}</Desc>
-                                <Button>SHOW NOW</Button>
+                                <Title>{item.name}</Title>
+                                <Desc>{item.price}$</Desc>
                             </InfoContainer>
                         </ImgContainer>
                     </Slide>
                 ))}
             </Wrapper>
             <Arrow direction="right" onClick={() => handleClick("right")}>
-                <ArrowRightOutlined />
+                <ArrowRightOutlined style={{ fontSize: "50px" }} />
             </Arrow>
         </Container>
+    </div>
     );
 };
 
-export default Slider;
+export default RecommenedProduct;
 

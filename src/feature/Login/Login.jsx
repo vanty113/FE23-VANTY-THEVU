@@ -1,59 +1,79 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Checkbox } from 'antd';
+import { yupResolver } from "@hookform/resolvers/yup";
 import { LayoutRegister } from "layout/LayoutRegister";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { loginAction } from "stores/slices/user.slice";
+import * as yup from "yup";
+import './login.scss';
 
-export function Login() {
+const schema = yup.object().shape({
+    email: yup.string()
+        .required('Please enter a valid email address'),
+    password: yup.string()
+        .required('Please enter a valid password'),
+}).required();
+
+export default function Login() {
     const userInfo = useSelector(state => state.users.userInfoState);
-    
+    console.log(userInfo);
     const dispatch = useDispatch();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm({ resolver: yupResolver(schema) });
 
-    if(userInfo.data) {
-        return <Navigate to={'/'}/>
+    if (userInfo.data) {
+        return <Navigate to={'/'} />
     }
 
     const onSubmit = (data) => {
         console.log("data: ", data);
         dispatch(loginAction(data));
-        // const userData = JSON.parse(localStorage.getItem(data.email));
-        // if (userData) { // getItem can return actual value or null
-        //     if (userData.password === data.password) {
-        //         console.log(userData.name + " You Are Successfully Logged In");
-        //     } else {
-        //         console.log("Email or Password is not matching with our record");
-        //     }
-        // } else {
-        //     console.log("Email or Password is not matching with our record");
-        // }
     };
     return (
         <LayoutRegister>
             <div className="login-page">
-                <p className="title">Login Form</p>
+                <p className="title">Log in Account</p>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <p>
-                    Email
-                    <input type="email" {...register("email", { required: true })} />
-                    {errors.email && <span style={{ color: "red" }}>
-                        *Email* is mandatory </span>}
-                    </p>
+                    <div className="width-input">
+                        <UserOutlined className="site-form-item-icon" />
+                        <input
+                            type="text"
+                            {...register("email")}
+                            placeholder="Username"
+                        />
+                    </div>
+                    <div className="errors-message">
+                        {errors.email?.message}
+                    </div>
 
-                    <p>
-                    Password
-                    <input type="password" {...register("password")} />
-                    </p>
-
-                    <div><input type={"submit"} value="Login" style={{ backgroundColor: "#a1eafb" }} /></div>
+                    <div className="width-input">
+                        <LockOutlined className="site-form-item-icon" />
+                        <input
+                            type="password"
+                            {...register("password")}
+                            placeholder="Password"
+                        />
+                    </div>
+                    <div className="errors-message">
+                        {errors.password?.message}
+                    </div>
+                    <div className="login-form-box-forgot">
+                        <Checkbox>Remember me</Checkbox>
+                        <span className="login-form-forgot">
+                            Forgot password
+                        </span>
+                    </div>
+                    <div className="btn-submit"><input type={"submit"} value="Log in" /></div>
+                    Or <Link to="/register">Register now!</Link>
                 </form>
             </div>
-        </LayoutRegister>
+        </LayoutRegister >
     )
 }

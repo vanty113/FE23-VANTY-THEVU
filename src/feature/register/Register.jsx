@@ -22,12 +22,11 @@ const schema = yup.object().shape({
     address: yup.string().required('Address is required'),
 }).required();
 
-export function Register() {
+export default function Register() {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm({ resolver: yupResolver(schema) });
 
-    const onSubmit = (data, e) => {
-        e.target.reset();
+    const onSubmit = (data) => {
         console.log('data:', data);
         alert('Register Successful');
         navigate('/');
@@ -68,7 +67,7 @@ export function Register() {
                 <div className="width-input"><input type="text" placeholder="Address" {...register('address')} /></div>
                 <div className="errors-message">{errors.address?.message}</div>
 
-                <input className="btn-submit" type="submit" value="Register" />
+                <input className="btn-submit" type="submit" value="Register"  style={{backgroundColor: '#1890ff'}}/>
             </form>
         </div>
     </LayoutRegister>)

@@ -13,6 +13,6 @@ export const CLEARANCE_DATA = [
         path: "/",
     },    {
         title: "Christmas",
-        path: "",
+        path: "/",
     }
 ]
