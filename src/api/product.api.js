@@ -4,7 +4,7 @@ import { API, URL_API } from "./const.api";
 
 export const ProductAPI = {
     fetchProduct: (page) => {
-      const queryParam = `?_page=${page}&_limit=${PRODUCT_LIMIT}`;
+      const queryParam = page ? `?_page=${page}&_limit=${PRODUCT_LIMIT}` : '';
   
       return API.get(`${URL_API}/api/products${queryParam}`);
     },

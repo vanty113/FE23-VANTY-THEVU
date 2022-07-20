@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "stores/slices/user.slice";
 
 
-
 const Container = styled.div`
     height: auto;
     width: 100%;
@@ -113,16 +112,20 @@ const Header = () => {
                     </SearchContainer>
                 </Center>
                 <Right>
-                    {user ? <MenuItem onClick={onShowLogout}>{user.email} {showLogout && <Button style={{ color: '#FFFFFF', border: '2px solid #1890ff', background:'#1890ff'}} onClick={handleLogout}>LOG OUT</Button>}</MenuItem>
-                    : <>
-                        <Link style={{ textDecoration: "none" }} to='/register'><MenuItem>REGISTER</MenuItem></Link>
-                        <Link style={{ textDecoration: "none" }} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
-                    </>}
-                    <MenuItem>
-                        <Badge badgeContent={2} color="primary">
-                            <ShoppingCartOutlined style={{ fontSize: "35px" }}/>
-                        </Badge>
-                    </MenuItem>
+                    {user ? <MenuItem onClick={onShowLogout}>{user.email} {showLogout && <Button style={{ color: '#FFFFFF', border: '2px solid #1890ff', background: '#1890ff' }} onClick={handleLogout}>LOG OUT</Button>}</MenuItem>
+                        : <>
+                            <Link style={{ textDecoration: "none" }} to='/register'><MenuItem>REGISTER</MenuItem></Link>
+                            <Link style={{ textDecoration: "none" }} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
+                        </>}
+
+                    <Link style={{ textDecoration: "none" }} to='/cart'>
+                        <MenuItem>
+                            <Badge badgeContent={2} color="primary">
+                                <ShoppingCartOutlined style={{ fontSize: "35px" }} />
+                            </Badge>
+                        </MenuItem>
+                    </Link>
+
                 </Right>
             </Wrapper>
             <Wrapper style={{ background: '#6596B6' }}>

@@ -10,6 +10,8 @@ const Register = React.lazy(() => import('feature/register/Register'));
 
 const MensClothing = React.lazy(() => import('feature/product/product-category/MensClothing'));
 
+const Cart = React.lazy(() => import('feature/product/product-list/Cart'));
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,7 @@ function App() {
           <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
           <Route path="/register" element={<React.Suspense fallback={<>Loading...</>}> <Register /> </React.Suspense>} />
           <Route path="/mens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <MensClothing /> </React.Suspense>} />
+          <Route path="/cart" element={<React.Suspense fallback={<>Loading...</>}> <Cart /> </React.Suspense>} />
         </Routes>
       </BrowserRouter>
     </div>

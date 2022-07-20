@@ -17,11 +17,11 @@ export const categoryData = [
     {
         id: 4,
         img: "https://cache.tradeinn.com/images/banners-categorias/10012-peke.jpg",
-        title: "ELECTRONICS",
+        title: "MEN'S CLOTHINGS",
     },
     {
         id: 5,
         img: "https://cache.tradeinn.com/images/banners-categorias/10007-peke.jpg",
-        title: "MEN'S CLOTHINGS",
+        title: "KID'S CLOTHINGS",
     },
 ];

@@ -1,14 +1,27 @@
+import { LoadingOutlined } from "@ant-design/icons";
+import { Pagination } from 'antd';
+import { MENSCLOTHING_FEATURE_DATA } from "constant/ProductFeatureData";
 import { LayoutRegister } from "layout/LayoutRegister";
-import styled from "styled-components";
-import { React, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductAction } from 'stores/slices/product.slice';
+import { Link, useSearchParams } from "react-router-dom";
+import { fetchProductAction, PRODUCT_LIMIT } from 'stores/slices/product.slice';
+import styled from "styled-components";
+import BoxProduct from "../product-list/BoxProduct";
 
-const Container = styled.div`
+
+const Container1 = styled.div`
     width: 98%;
     margin: auto;
     display: flex;
     justify-content: center;
+`;
+const Container2 = styled.div`
+    width: 98%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `;
 
 const Wrapper = styled.div`
@@ -53,42 +66,82 @@ const P = styled.h1`
 `;
 
 export default function MensClothing() {
-    // const productState = useSelector((state) => state.product.productState);
-    // const dispatch = useDispatch();
+    const productState = useSelector((state) => state.product.productState);
+    const mensClothing = productState.data.filter(item => item.category === "mensclothing");
+    const [productData, setProductData] = useState(mensClothing);
+    const dispatch = useDispatch();
 
-    // const page = productState.pagination.page;
-    // const total = productState.pagination.total;
-    // const loading = productState.loading;
+    const [searchParams] = useSearchParams();
+    let feature = searchParams.get('feature');
+    // console.log("feature: ", feature);
+    const page = productState.pagination.page ?? 1;
+    const total = productState.pagination.total ?? 20;
+    const loading = productState.loading;
+    console.log(page);
+    console.log(total);
+    useEffect(() => {
+        dispatch(fetchProductAction(2));
+    }, [dispatch]);
 
-    // useEffect(() => {
-    //     dispatch(fetchProductAction());
-    // }, []);
+    useEffect(() => {
+        switch (feature) {
+            case "fleeces":
+                const fleecesMensClothing = productState.data.filter(item => item.feature === feature);
+                setProductData(fleecesMensClothing);
+                break;
 
-    // const onPaginationChange = (page, pageSize) => {
-    //   dispatch(fetchProductAction(page));
-    // };
+            case "gloves":
+                const glovesMensClothing = productState.data.filter(item => item.feature === "gloves");
+                setProductData(glovesMensClothing);
+                break;
+            default:
+                const mensClothing = productState.data.filter(item => item.category === "mensclothing");
+                setProductData(mensClothing)
+                break;
+        }
+    }, [feature])
+
+    const onPaginationChange = (page) => {
+        dispatch(fetchProductAction(page));
+    };
     return (<LayoutRegister>
         <>
             <H2>Men´s clothing running and triathlon</H2>
             <P>Find a wide range of <b>Men´s clothing</b> products. Discover the best deals for your <b>running and triathlon</b> equipment at <b>runnerinn</b>. Fast shipping.</P>
-            <Container>
-                <Wrapper>
-                        <ImgContainer>
-                            <Image src={"https://www.tradeinn.com/h/13901/139018700/joma-running-night-half-zip-fleece.jpg"} />
-                            <InfoContainer>
-                                <Title>Fleeces</Title>
-                            </InfoContainer>
-                        </ImgContainer>
-                </Wrapper>
-                <Wrapper>
-                        <ImgContainer>
-                            <Image src={"https://www.tradeinn.com/h/13823/138230980/2xu-run-gloves.jpg"} />
-                            <InfoContainer>
-                                <Title>Gloves</Title>
-                            </InfoContainer>
-                        </ImgContainer>
-                </Wrapper>
-            </Container>
+            <Container1>
+                {MENSCLOTHING_FEATURE_DATA.map((item, index) => {
+                    return (<Wrapper key={index}>
+                        <Link style={{ textDecoration: 'none' }} to={item.path}>
+                            <ImgContainer>
+                                <Image src={item.img} />
+                                <InfoContainer>
+                                    <Title>{item.title}</Title>
+                                </InfoContainer>
+                            </ImgContainer>
+                        </Link>
+                    </Wrapper>)
+                })}
+            </Container1>
+            {loading && (
+                <div>
+                    <LoadingOutlined />
+                </div>
+            )}
+            <Container2>
+                {productState.data.map((item) => {
+                    return (<BoxProduct key={item.id} data={item} />)
+                    // <Link key={item.id} style={{ textDecoration: 'none' }} to={"/"}>
+
+                    {/* </Link>) */ }
+                })}
+            </Container2>
+
         </>
+        <Pagination
+            onChange={onPaginationChange}
+            pageSize={20}
+            current={page}
+            total={total}
+        />
     </LayoutRegister>)
 }
