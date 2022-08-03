@@ -5,7 +5,7 @@ import {
 import { loginAction, 
     loginActionFailed, 
     loginActionSuccess, 
-    logoutAction, 
+    // logoutAction, 
     // logoutActionFailed, 
     // logoutActionSuccess, 
     // registerAction, 
@@ -16,15 +16,15 @@ import { AuthAPI } from '../../api';
 function* login(action) {
     try {
         const loginPayload = action.payload
-        console.log(action.payload);
+        // console.log(action.payload);
         const response = yield AuthAPI.login({
             email: loginPayload.email,
             password: loginPayload.password,
         });
-        console.log(response.data.user);
+        // console.log(response.data.user); 
         yield put(loginActionSuccess(response.data.user));
     } catch (e) {
-        yield put(loginActionFailed(e.message));
+        yield put(loginActionFailed(e.response.data));
     }
 }
 

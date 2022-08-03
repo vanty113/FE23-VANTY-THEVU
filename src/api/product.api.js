@@ -8,4 +8,9 @@ export const ProductAPI = {
   
       return API.get(`${URL_API}/api/products${queryParam}`);
     },
+    searchProduct: (textSearch) => {
+      const queryParam = `?q=${textSearch}`;
+      
+      return API.get(`${URL_API}/api/products${queryParam}`);
+    },
   };

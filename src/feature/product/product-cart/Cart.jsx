@@ -1,5 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
-import { LayoutRegister } from "layout/LayoutRegister";
+import { AppLayout } from "layout/AppLayout";
 import styled from "styled-components";
 
 const Container = styled.div``;
@@ -65,12 +65,12 @@ const ProductName = styled.span``;
 
 const ProductId = styled.span``;
 
-const ProductColor = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: ${(props) => props.color};
-`;
+// const ProductColor = styled.div`
+//     width: 20px;
+//     height: 20px;
+//     border-radius: 50%;
+//     background-color: ${(props) => props.color};
+// `;
 
 const ProductSize = styled.span``;
 
@@ -136,7 +136,7 @@ const Button = styled.button`
 
 const Cart = () => {
     return (
-        <LayoutRegister>
+        <AppLayout>
             <Container>
                 <Wrapper>
                     <Title>SHOPPING BASKET</Title>
@@ -209,7 +209,7 @@ const Cart = () => {
                     </Bottom>
                 </Wrapper>
             </Container>
-        </LayoutRegister>
+        </AppLayout>
     );
 };
 

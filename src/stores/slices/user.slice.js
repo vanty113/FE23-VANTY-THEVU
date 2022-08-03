@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const USER_INFO_KEY = 'USER_INFO';
 
@@ -24,12 +25,12 @@ const userSlice = createSlice({
             }
         },
         loginActionSuccess(state, action) {
-            const userInfoResponse = {...action.payload};
+            const userInfoResponse = { ...action.payload };
             localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse))
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
-                data: userInfoResponse
+                data: userInfoResponse,
             }
         },
         loginActionFailed(state, action) {
@@ -37,11 +38,11 @@ const userSlice = createSlice({
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
-                error: action.payload.error
+                error: toast.error(action.payload),
             }
         },
         // registerAction(state, action) {
-            
+
         // },
         // registerActionSuccess(state, action) {
         // },
@@ -63,8 +64,8 @@ const userSlice = createSlice({
     },
 })
 
-export const { 
-    loginAction, loginActionSuccess, loginActionFailed, 
+export const {
+    loginAction, loginActionSuccess, loginActionFailed,
     // registerAction, registerActionSuccess, registerActionFailed,
     logoutAction,
 } = userSlice.actions

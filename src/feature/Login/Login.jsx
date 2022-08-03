@@ -1,10 +1,12 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Checkbox } from 'antd';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LayoutRegister } from "layout/LayoutRegister";
+import { Checkbox } from 'antd';
+import { AppLayout } from "layout/AppLayout";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { loginAction } from "stores/slices/user.slice";
 import * as yup from "yup";
 import './login.scss';
@@ -18,7 +20,7 @@ const schema = yup.object().shape({
 
 export default function Login() {
     const userInfo = useSelector(state => state.users.userInfoState);
-    console.log(userInfo);
+    // console.log("userInfo:", userInfo);
     const dispatch = useDispatch();
 
     const {
@@ -31,12 +33,11 @@ export default function Login() {
         return <Navigate to={'/'} />
     }
 
-    const onSubmit = (data) => {
-        console.log("data: ", data);
+    const onSubmit = (data) => {        
         dispatch(loginAction(data));
     };
     return (
-        <LayoutRegister>
+        <AppLayout>
             <div className="login-page">
                 <p className="title">Log in Account</p>
 
@@ -70,10 +71,10 @@ export default function Login() {
                             Forgot password
                         </span>
                     </div>
-                    <div className="btn-submit"><input type={"submit"} value="Log in" /></div>
+                    <div className="btn-submit"><input type={"submit"} value="Log in" /><ToastContainer autoClose={1000} /></div>
                     Or <Link to="/register">Register now!</Link>
                 </form>
             </div>
-        </LayoutRegister >
+        </AppLayout >
     )
 }

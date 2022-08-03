@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import { Layout } from 'layout/Layout';
+import { FullLayout } from 'layout/FullLayout';
 import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductAction } from 'stores/slices/product.slice';
@@ -23,7 +23,7 @@ export default function HomePage() {
     //   dispatch(fetchProductAction(page));
     // };
     return (<>
-        <Layout>
+        <FullLayout>
             {loading && (
                 <div>
                     <LoadingOutlined />
@@ -36,6 +36,6 @@ export default function HomePage() {
                 </div>
             )}
             <BestSellersProduct bestSellerProduct={bestSellerProduct} />
-        </Layout>
+        </FullLayout>
     </>)
 }

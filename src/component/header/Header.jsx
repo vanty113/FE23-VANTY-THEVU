@@ -1,11 +1,14 @@
-import { Badge, Menu, Button } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import { React, useState } from "react";
-import styled from "styled-components";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Button } from "@material-ui/core";
+import { Search } from "@material-ui/icons";
+import { Badge } from 'antd';
 import Logos from 'assets/runnerinn.svg';
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { searchProductAction } from "stores/slices/product.slice";
 import { logoutAction } from "stores/slices/user.slice";
+import styled from "styled-components";
 
 
 const Container = styled.div`
@@ -60,6 +63,7 @@ const Input = styled.input`
     border: none;
     width: 90%;
     outline: none;
+    color: #000;
 `;
 
 
@@ -67,24 +71,57 @@ const Logo = styled.img`
     width: 200px;
     height: 50px;
 `;
-
+const ButtonLogout = styled.div`
+    display: none;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px 0 5px;
+`;
 const MenuItem = styled.div`
     font-size: 17px;
     color: #FFFFFF;
     cursor: pointer;
     margin-left: 25px;
+    &:hover ${ButtonLogout} {
+        display: block;
+    }
 `;
+
 
 
 const Header = () => {
     const userInfo = useSelector(state => state.users.userInfoState);
     const dispatch = useDispatch();
     const user = userInfo.data;
+    const navigate = useNavigate();
 
-    const [showLogout, setShowLogout] = useState(false);
-    const onShowLogout = () => {
-        setShowLogout(!showLogout)
+    const [searchTerm, setSearchTerm] = useState('');
+    const typingTimeoutRef = useRef(null);
+
+    const onSubmit = (newFilters) => {
+        if (newFilters.searchTerm === "") {
+            navigate('/');
+        } else {
+            navigate(`/products-search/${newFilters.searchTerm}`);
+            dispatch(searchProductAction(newFilters));
+        }
+    };
+
+    const handleSearchTermChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        }
+
+        typingTimeoutRef.current = setTimeout(() => {
+            const formValues = {
+                searchTerm: value,
+            };
+            onSubmit(formValues);
+        }, 1000)
     }
+
     const handleLogout = () => {
         dispatch(logoutAction());
     }
@@ -94,9 +131,9 @@ const Header = () => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
     return (
         <Container>
@@ -107,21 +144,24 @@ const Header = () => {
                 <Center>
                     <Language>EN</Language>
                     <SearchContainer>
-                        <Input placeholder='Search 1000 products' />
+                        <Input value={searchTerm} onChange={handleSearchTermChange} placeholder='Search 1000 products' />
                         <Search style={{ color: "gray", fontSize: 16 }} />
                     </SearchContainer>
                 </Center>
                 <Right>
-                    {user ? <MenuItem onClick={onShowLogout}>{user.email} {showLogout && <Button style={{ color: '#FFFFFF', border: '2px solid #1890ff', background: '#1890ff' }} onClick={handleLogout}>LOG OUT</Button>}</MenuItem>
+                    {user ?
+                        <MenuItem>
+                            {user.email}
+                            <ButtonLogout onClick={handleLogout}>LOG OUT</ButtonLogout>
+                        </MenuItem>
                         : <>
                             <Link style={{ textDecoration: "none" }} to='/register'><MenuItem>REGISTER</MenuItem></Link>
                             <Link style={{ textDecoration: "none" }} to='/login'><MenuItem>SIGN IN</MenuItem></Link>
                         </>}
-
                     <Link style={{ textDecoration: "none" }} to='/cart'>
                         <MenuItem>
-                            <Badge badgeContent={2} color="primary">
-                                <ShoppingCartOutlined style={{ fontSize: "35px" }} />
+                            <Badge count={5}>
+                                <ShoppingCartOutlined style={{ fontSize: "30px", color: "#fff" }} />
                             </Badge>
                         </MenuItem>
                     </Link>
@@ -137,9 +177,9 @@ const Header = () => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                 >
-                    All CATERGORIES
+                    All Catergories
                 </Button>
-                <Menu
+                {/* <Menu
                     id="demo-positioned-menu"
                     aria-labelledby="demo-positioned-button"
                     anchorEl={anchorEl}
@@ -158,13 +198,13 @@ const Header = () => {
                     <MenuItem onClick={handleClose}>Adidas</MenuItem>
                     <MenuItem onClick={handleClose}>Nike</MenuItem>
                     <MenuItem onClick={handleClose}>Puma</MenuItem>
-                </Menu>
+                </Menu> */}
                 <Link style={{ textDecoration: "none" }} to="/"><MenuItem>Home</MenuItem></Link>
+                <Link style={{ textDecoration: "none" }} to="/all-products"><MenuItem>All Product</MenuItem></Link>
+                <Link style={{ textDecoration: "none" }} to="/womens-shoes"><MenuItem>Women's shoes</MenuItem></Link>
                 <MenuItem>Men's shoes</MenuItem>
-                <MenuItem>Women's shoes</MenuItem>
                 <Link style={{ textDecoration: "none" }} to="/mens-clothing"><MenuItem>Men's clothing</MenuItem></Link>
                 <MenuItem>Women's clothing</MenuItem>
-                <MenuItem>Hot deals!</MenuItem>
             </Wrapper>
         </Container>
     );

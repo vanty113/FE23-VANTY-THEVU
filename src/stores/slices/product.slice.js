@@ -21,7 +21,6 @@ const initialState = {
     },
   },
 };
-
 const productSlice = createSlice({
   name: "product",
   initialState,
@@ -55,6 +54,35 @@ const productSlice = createSlice({
     fetchProductActionFailed: (state, action) => {
       notification.error(action.payload);
     },
+
+    searchProductAction: (state, action) => {
+      const page = action.payload;
+
+      state.productState = {
+        ...state.productState,
+        loading: true,
+        pagination: {
+          ...state.productState.pagination,
+          page,
+        },
+      };
+    },
+    searchProductActionSuccess: (state, action) => {
+      const { data, totalProduct } = action.payload;
+      state.productState = {
+        ...state.productState,
+        data,
+        loading: false,
+        pagination: {
+          ...state.productState.pagination,
+          total: +totalProduct,
+          totalPage: totalProduct / PRODUCT_LIMIT,
+        },
+      };
+    },
+    searchProductActionFailed: (state, action) => {
+      notification.error(action.payload);
+    },
   },
 });
 
@@ -62,6 +90,9 @@ export const {
   fetchProductAction,
   fetchProductActionSuccess,
   fetchProductActionFailed,
+  searchProductAction,
+  searchProductActionSuccess,
+  searchProductActionFailed,
 } = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

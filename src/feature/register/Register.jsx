@@ -1,9 +1,9 @@
-import { LayoutRegister } from "layout/LayoutRegister";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import './register.scss';
 import { useNavigate } from "react-router-dom";
+import { AppLayout } from "layout/AppLayout";
 
 const schema = yup.object().shape({
     firstName: yup.string()
@@ -32,7 +32,7 @@ export default function Register() {
         navigate('/');
     }
 
-    return (<LayoutRegister>
+    return (<AppLayout>
         <div className="register-page">
             <p>Register Account</p>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -70,5 +70,5 @@ export default function Register() {
                 <input className="btn-submit" type="submit" value="Register"  style={{backgroundColor: '#1890ff'}}/>
             </form>
         </div>
-    </LayoutRegister>)
+    </AppLayout>)
 }
