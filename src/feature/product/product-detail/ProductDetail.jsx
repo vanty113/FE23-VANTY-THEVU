@@ -74,6 +74,7 @@ const AmountContainer = styled.div`
   align-items: center;
   font-weight: 700;
   margin: 10px 0;
+  cursor: pointer;
 `;
 
 const Amount = styled.span`
@@ -100,31 +101,43 @@ const Button = styled.button`
 const ProductDetail = () => {
   const productState = useSelector(state => state.product.productState);
   const data = productState.data;
-  // const [productDetail, setProductDetail] = useState({
-  //   name: "",
-  //   price: null,
-  //   img: "",
-  //   category: "",
-  //   feature: "",
-  //   size: null,
-  // });
-  // console.log("productDetail",productDetail);
+  const [productDetail, setProductDetail] = useState({
+    name: "",
+    price: null,
+    img: "",
+    category: "",
+    feature: "",
+    size: null,
+  });
+  const [sizeOption, setSizeOption] = useState(28);
+  const [amount, setAmount] = useState(1);
+
   const dispatch = useDispatch();
-  console.log("data:", data);
-  // useEffect(() => {
-  //   dispatch(fetchProductAction());
-  // }, [dispatch])
-
   const { id } = useParams();
-  // console.log("id:",id);
-  const newData = data.find(item => item.id === id);
-  console.log("newData", newData);
+  
+  useEffect(() => {
+    dispatch(fetchProductAction());
+  }, [dispatch])
 
-  // useEffect(() => {
-  //   setProductDetail(newData);
-  // },[newData])
-  // console.log("newData:", newData);
+  useEffect(() => {
+    const dataDetail = data.find((item)=> item.id == id);
+    setProductDetail(dataDetail)
+  }, [data])
 
+   const handleSizeChange = (e) => {
+    setSizeOption(e.target.value)
+   }
+
+   const handleAddAmount = () => {
+    if(amount < 100) {
+      setAmount(amount + 1);
+    }
+   }
+   const handleRemoveAmount = () => {
+    if(amount > 1) {
+      setAmount(amount - 1);
+    }
+   }
   return (
     <AppLayout>
       <Container>
@@ -132,30 +145,29 @@ const ProductDetail = () => {
           <ImgContainer>
             <Image
               width={350}
-              src="https://www.tradeinn.com/h/13815/138155547/reebok-classic-tape-jacket.jpg"
+              src={productDetail?.img}
             />
-            {/* <Image src="https://www.tradeinn.com/h/13815/138155547/reebok-classic-tape-jacket.jpg" /> */}
           </ImgContainer>
           <InfoContainer>
-            <Title>Asics Hyper MD 7 Track Shoes</Title>
+            <Title>{productDetail?.name}</Title>
             <AddContainer>
               <AmountContainer>
-                <Remove />
-                <Amount>1</Amount>
-                <Add />
+                <Remove onClick={handleRemoveAmount} />
+                <Amount>{amount}</Amount>
+                <Add onClick={handleAddAmount} />
               </AmountContainer>
             </AddContainer>
-            <Price>$ 20</Price>
+            <Price>{productDetail?.price}$</Price>
             <FilterContainer>
               <Filter>
                 <FilterTitle>Size</FilterTitle>
-                <FilterSize>
-                  <FilterSizeOption>28</FilterSizeOption>
-                  <FilterSizeOption>29</FilterSizeOption>
-                  <FilterSizeOption>30</FilterSizeOption>
-                  <FilterSizeOption>31</FilterSizeOption>
-                  <FilterSizeOption>32</FilterSizeOption>
-                  <FilterSizeOption>33</FilterSizeOption>
+                <FilterSize onChange={handleSizeChange} value={sizeOption}>
+                  <FilterSizeOption value={28}>28</FilterSizeOption>
+                  <FilterSizeOption  value={29}>29</FilterSizeOption>
+                  <FilterSizeOption value={30}>30</FilterSizeOption>
+                  <FilterSizeOption value={31}>31</FilterSizeOption>
+                  <FilterSizeOption value={32} >32</FilterSizeOption>
+                  <FilterSizeOption value={33}>33</FilterSizeOption>
                 </FilterSize>
               </Filter>
             </FilterContainer>

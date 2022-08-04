@@ -65,3 +65,46 @@ export const WOMENSSHOES_FEATURE_DATA = [
         path:"?feature=trailrunningshoes",
     },
 ];
+
+export const WOMENSCLOTHING_FEATURE_DATA = [
+    {
+        img: "https://www.tradeinn.com/h/13908/139081768/otso-skirt.jpg",
+        title: "Skirts ",
+        path:"?feature=skirts",
+    },
+    {
+        img: "https://www.tradeinn.com/h/13744/137448291/zone3-revolution-short-sleeve-trisuit.jpg",
+        title: "Trisuits ",
+        path:"?feature=trisuits",
+    },
+]
+
+export const KIDSCLOTHING_FEATURE_DATA = [
+    {
+        img: "https://www.tradeinn.com/h/13815/138155548/reebok-classic-tape-jacket.jpg",
+        title: "Jackets ",
+        path:"?feature=jackets",
+    },
+    {
+        img: "https://www.tradeinn.com/h/131/1311128/joma-nobel-short-pants.jpg",
+        title: "Pants",
+        path:"?feature=pants",
+    }
+];
+export const KIDSSHOES_FEATURE_DATA = [
+    {
+        img: "https://www.tradeinn.com/h/13857/138578581/joma-357-trainers.jpg",
+        title: "Casual ",
+        path:"?feature=casual",
+    },
+    {
+        img: "https://www.tradeinn.com/h/13842/138429191/adidas-tensaur-run-2.0-cf-running-shoes-kid.jpg",
+        title: "Running shoes ",
+        path:"?feature=runningshoes",
+    },
+    {
+        img: "https://www.tradeinn.com/h/13836/138368015/joma-sima-trail-running-shoes.jpg",
+        title: "Trail running shoes ",
+        path:"?feature=trailrunningshoes",
+    },
+];

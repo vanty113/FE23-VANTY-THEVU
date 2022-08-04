@@ -19,7 +19,7 @@ const EmptySearch = styled.div`
 `
 export default function ProductSearch() {
     const productState = useSelector(state => state.product.productState);
-    // console.log("productState:", productState.data.length);
+    console.log("productState:", productState.data.length);
     const loading = productState.loading;
     const dataLength = productState.data.length;
 

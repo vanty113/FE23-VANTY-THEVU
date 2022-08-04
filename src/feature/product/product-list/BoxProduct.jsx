@@ -68,6 +68,8 @@ const Price = styled.p`
 const ProductImage = styled.div`
   height: 80%;
   width: 100%;
+  padding: 0 10px;
+
 `
 
 const ProductInfo = styled.div`

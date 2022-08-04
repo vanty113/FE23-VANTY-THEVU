@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { WOMENSSHOES_FEATURE_DATA } from "constant/ProductFeatureData";
+import { KIDSSHOES_FEATURE_DATA } from "constant/ProductFeatureData";
 import { AppLayout } from "layout/AppLayout";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,9 +63,8 @@ const P = styled.h1`
     color: #000;
 `;
 
-export default function WomenShoes() {
+export default function MensClothing() {
     const productState = useSelector((state) => state.product.productState);
-    // console.log("womens: ",productState.data);
     const [productList, setProductList] = useState(productState.data);
     const dispatch = useDispatch();
 
@@ -73,36 +72,26 @@ export default function WomenShoes() {
     let feature = searchParams.get('feature');
 
     const loading = productState.loading;
-    // console.log('loading', loading);
+
     useEffect(() => {
-        dispatch(fetchProductAction(5));
+        dispatch(fetchProductAction(6));
     }, [dispatch]);
 
     useEffect(() => {
         switch (feature) {
             case "casual":
-                const casualWomenshoes = productState.data.filter(item => item.feature === "casual");
-                setProductList(casualWomenshoes);
-                break;
-
-            case "sandals":
-                const sandalslWomenshoes = productState.data.filter(item => item.feature === "sandals");
-                setProductList(sandalslWomenshoes);
-                break;
-
-            case "trackshoes":
-                const trackshoeslWomenshoes = productState.data.filter(item => item.feature === "trackshoes");
-                setProductList(trackshoeslWomenshoes);
+                const casualKidshoes = productState.data.filter(item => item.feature === "casual");
+                setProductList(casualKidshoes);
                 break;
 
             case "runningshoes":
-                const runningshoeslWomenshoes = productState.data.filter(item => item.feature === "runningshoes");
-                setProductList(runningshoeslWomenshoes);
+                const runningshoeslKidshoes = productState.data.filter(item => item.feature === "runningshoes");
+                setProductList(runningshoeslKidshoes);
                 break;
 
             case "trailrunningshoes":
-                const trailrunningshoeslWomenshoes = productState.data.filter(item => item.feature === "trailrunningshoes");
-                setProductList(trailrunningshoeslWomenshoes);
+                const trailrunningshoesKidsshoes = productState.data.filter(item => item.feature === "trailrunningshoes");
+                setProductList(trailrunningshoesKidsshoes);
                 break;
 
             default:
@@ -113,10 +102,10 @@ export default function WomenShoes() {
 
     return (<AppLayout>
         <>
-            <H2>Women´s shoes running and triathlon</H2>
-            <P>Find a wide range of <b>Women´s shoes</b> products. Discover the best deals for your <b>running and triathlon</b> equipment at <b>runnerinn</b>. Fast shipping.</P>
+            <H2>Kid´s shoes running and triathlon</H2>
+            <P>Find a wide range of <b>Kid´s shoes</b> products. Discover the best deals for your <b>running and triathlon</b> equipment at <b>runnerinn</b>. Fast shipping.</P>
             <Container1>
-                {WOMENSSHOES_FEATURE_DATA.map((item, index) => {
+                {KIDSSHOES_FEATURE_DATA.map((item, index) => {
                     return (<Wrapper key={index}>
                         <Link style={{ textDecoration: 'none' }} to={item.path}>
                             <ImgContainer>
@@ -129,12 +118,15 @@ export default function WomenShoes() {
                     </Wrapper>)
                 })}
             </Container1>
-            <H2>Featured products in Women´s shoes</H2>
-            {loading ? <div><LoadingOutlined /></div> : <Container2>
+            <H2>Featured products in Kid´s shoes</H2>
+            {loading && <div><LoadingOutlined /></div>}
+            {!loading && <Container2>
                 {productList.map((item) => {
-                    return (<BoxProduct key={item.id} data={item} />)
+                    return (<Link to={`/products-detail/${item.id}`} key={item.id} style={{ textDecoration: 'none', marginBottom: "10px" }}><BoxProduct data={item} /></Link>)
                 })}
             </Container2>}
+
+
         </>
     </AppLayout>)
 }

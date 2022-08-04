@@ -202,9 +202,9 @@ const Header = () => {
                 <Link style={{ textDecoration: "none" }} to="/"><MenuItem>Home</MenuItem></Link>
                 <Link style={{ textDecoration: "none" }} to="/all-products"><MenuItem>All Product</MenuItem></Link>
                 <Link style={{ textDecoration: "none" }} to="/womens-shoes"><MenuItem>Women's shoes</MenuItem></Link>
-                <MenuItem>Men's shoes</MenuItem>
+                <Link style={{ textDecoration: "none" }} to="/mens-shoes"><MenuItem>Men's shoes</MenuItem></Link>
                 <Link style={{ textDecoration: "none" }} to="/mens-clothing"><MenuItem>Men's clothing</MenuItem></Link>
-                <MenuItem>Women's clothing</MenuItem>
+                <Link style={{ textDecoration: "none" }} to="/womens-clothing"><MenuItem>Women's clothing</MenuItem></Link>
             </Wrapper>
         </Container>
     );

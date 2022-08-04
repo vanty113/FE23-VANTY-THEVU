@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { WOMENSSHOES_FEATURE_DATA } from "constant/ProductFeatureData";
+import { MENSSHOES_FEATURE_DATA } from "constant/ProductFeatureData";
 import { AppLayout } from "layout/AppLayout";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,29 +75,29 @@ export default function WomenShoes() {
     const loading = productState.loading;
     // console.log('loading', loading);
     useEffect(() => {
-        dispatch(fetchProductAction(5));
+        dispatch(fetchProductAction(4));
     }, [dispatch]);
 
     useEffect(() => {
         switch (feature) {
             case "casual":
-                const casualWomenshoes = productState.data.filter(item => item.feature === "casual");
-                setProductList(casualWomenshoes);
+                const casualMenshoes = productState.data.filter(item => item.feature === "casual");
+                setProductList(casualMenshoes);
                 break;
 
             case "sandals":
-                const sandalslWomenshoes = productState.data.filter(item => item.feature === "sandals");
-                setProductList(sandalslWomenshoes);
+                const sandalsMenshoes = productState.data.filter(item => item.feature === "sandals");
+                setProductList(sandalsMenshoes);
                 break;
 
             case "trackshoes":
-                const trackshoeslWomenshoes = productState.data.filter(item => item.feature === "trackshoes");
-                setProductList(trackshoeslWomenshoes);
+                const trackshoeslMenshoes = productState.data.filter(item => item.feature === "trackshoes");
+                setProductList(trackshoeslMenshoes);
                 break;
 
             case "runningshoes":
-                const runningshoeslWomenshoes = productState.data.filter(item => item.feature === "runningshoes");
-                setProductList(runningshoeslWomenshoes);
+                const runningshoeslMenshoes = productState.data.filter(item => item.feature === "runningshoes");
+                setProductList(runningshoeslMenshoes);
                 break;
 
             case "trailrunningshoes":
@@ -113,10 +113,10 @@ export default function WomenShoes() {
 
     return (<AppLayout>
         <>
-            <H2>Women´s shoes running and triathlon</H2>
-            <P>Find a wide range of <b>Women´s shoes</b> products. Discover the best deals for your <b>running and triathlon</b> equipment at <b>runnerinn</b>. Fast shipping.</P>
+            <H2>Men´s shoes running and triathlon</H2>
+            <P>Find a wide range of <b>Men´s shoes</b> products. Discover the best deals for your <b>running and triathlon</b> equipment at <b>runnerinn</b>. Fast shipping.</P>
             <Container1>
-                {WOMENSSHOES_FEATURE_DATA.map((item, index) => {
+                {MENSSHOES_FEATURE_DATA.map((item, index) => {
                     return (<Wrapper key={index}>
                         <Link style={{ textDecoration: 'none' }} to={item.path}>
                             <ImgContainer>
@@ -129,7 +129,7 @@ export default function WomenShoes() {
                     </Wrapper>)
                 })}
             </Container1>
-            <H2>Featured products in Women´s shoes</H2>
+            <H2>Featured products in Men´s shoes</H2>
             {loading ? <div><LoadingOutlined /></div> : <Container2>
                 {productList.map((item) => {
                     return (<BoxProduct key={item.id} data={item} />)

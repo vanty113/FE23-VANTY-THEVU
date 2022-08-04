@@ -2,6 +2,7 @@ import { TOP_BRANDS_DATA } from "../../../constant/TopBrandsData";
 import './brands.scss';
 import { DEPARTMENTS_DATA } from "../../../constant/DepartmentsData";
 import { CLEARANCE_DATA } from "../../../constant/ClearanceData";
+import { Link } from "react-router-dom";
 
 export function ScBrands() {
     const listBrands1 = TOP_BRANDS_DATA.slice(0, 20);
@@ -18,7 +19,7 @@ export function ScBrands() {
         <li key={index}>{item.title}</li>);
 
     const showListDepartments = DEPARTMENTS_DATA.map((item, index) =>
-        <li key={index}>{item.title}</li>)
+        <Link to={item.path} key={index}>{item.title}</Link>)
 
     const showListClearance = CLEARANCE_DATA.map((item, index) =>
         <li key={index}>{item.title}</li>)

@@ -37,8 +37,7 @@ const ImgContainer = styled.div`
 const Image = styled.img`
     width: 100%;
     position: relative;
-    padding-bottom: 20px;
-    padding-top: 20px;
+    padding: 20px 10px;
 `;
 
 const InfoContainer = styled.div`

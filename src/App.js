@@ -10,7 +10,15 @@ const Register = React.lazy(() => import('feature/register/Register'));
 
 const MensClothing = React.lazy(() => import('feature/product/product-category/MensClothing'));
 
+const WomensClothing = React.lazy(() => import('feature/product/product-category/WomensClothing'));
+
+const KidsClothing = React.lazy(() => import('feature/product/product-category/KidsClothing'));
+
+const KidShoes = React.lazy(() => import('feature/product/product-category/KidShoes'));
+
 const WomenShoes = React.lazy(() => import('feature/product/product-category/WomenShoes'));
+
+const MenShoes = React.lazy(() => import('feature/product/product-category/MenShoes'));
 
 const Cart = React.lazy(() => import('feature/product/product-cart/Cart'));
 
@@ -29,7 +37,11 @@ function App() {
           <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
           <Route path="/register" element={<React.Suspense fallback={<>Loading...</>}> <Register /> </React.Suspense>} />
           <Route path="/mens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <MensClothing /> </React.Suspense>} />
+          <Route path="/womens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <WomensClothing /> </React.Suspense>} />
+          <Route path="/kids-clothing" element={<React.Suspense fallback={<>Loading...</>}> <KidsClothing /> </React.Suspense>} />
+          <Route path="/kids-shoes" element={<React.Suspense fallback={<>Loading...</>}> <KidShoes /> </React.Suspense>} />
           <Route path="/womens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <WomenShoes /> </React.Suspense>} />
+          <Route path="/mens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <MenShoes /> </React.Suspense>} />
           <Route path="/cart" element={<React.Suspense fallback={<>Loading...</>}> <Cart /> </React.Suspense>} />
           <Route path="/all-products" element={<React.Suspense fallback={<>Loading...</>}> <AllProducts /> </React.Suspense>} />
           <Route path="/products-search/:q" element={<React.Suspense fallback={<>Loading...</>}> <ProductSearch /> </React.Suspense>} />

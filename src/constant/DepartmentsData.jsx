@@ -1,19 +1,19 @@
 export const DEPARTMENTS_DATA = [
     {
         title: "Men's clothing",
-        path: "?category=mensclothing",
+        path: "/mens-clothing",
     },
     {
         title: "Men's shoes",
-        path: "?category=menshoes",
+        path: "/mens-shoes",
     },
     {
         title: "Women's clothing",
-        path: "?category=womensclothing",
+        path: "/womens-clothing",
     },
     {
         title: "Women's shoes",
-        path: "?category=womenshoes",
+        path: "/womens-shoes",
     },
     {
         title: "Bags and waist packs",
@@ -29,11 +29,11 @@ export const DEPARTMENTS_DATA = [
     },
     {
         title: "Kid's clothing",
-        path: "?category=kidsclothing",
+        path: "/kids-clothing",
     },
     {
         title: "Kid's shoes",
-        path: "?category=kidshoes",
+        path: "/kids-shoes",
     },
     {
         title: "Lighting",
