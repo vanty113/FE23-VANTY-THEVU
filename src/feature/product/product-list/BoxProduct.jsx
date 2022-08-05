@@ -66,12 +66,10 @@ const Price = styled.p`
   font-weight: bold;
 `
 const ProductImage = styled.div`
-  height: 80%;
   width: 100%;
-  padding: 0 10px;
+  padding: 10px 10px 0;
 
 `
-
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,6 +1,9 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { AppLayout } from "layout/AppLayout";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { searchProductAction } from "stores/slices/product.slice";
 import styled from "styled-components";
 import BoxProduct from "../product-list/BoxProduct";
 
@@ -19,13 +22,19 @@ const EmptySearch = styled.div`
 `
 export default function ProductSearch() {
     const productState = useSelector(state => state.product.productState);
-    console.log("productState:", productState.data.length);
+    const dispatch = useDispatch();
     const loading = productState.loading;
     const dataLength = productState.data.length;
 
+    const { q } = useParams();
+
+    useEffect(() => {
+        dispatch(searchProductAction(q));
+    }, [q, dispatch])
+
     return (<AppLayout>
-        {loading ?? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div>}
-        {dataLength ? <Container>
+        {loading ? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div> :
+        dataLength ? <Container>
             {productState.data.map((item) => (
                 <BoxProduct data={item} key={item.id} />
             ))}

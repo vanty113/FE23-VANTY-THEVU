@@ -32,7 +32,8 @@ function* fetchProduct(action) {
 function* searchProduct(action) {
   try {
     yield delay(1000);
-    const response = yield ProductAPI.searchProduct(action.payload.searchTerm);
+    console.log(action.payload)
+    const response = yield ProductAPI.searchProduct(action.payload);
     // console.log("response", response.data.length);
     const productData = response.data;
     // console.log("productData: ", productData);

@@ -86,8 +86,6 @@ const MenuItem = styled.div`
     }
 `;
 
-
-
 const Header = () => {
     const userInfo = useSelector(state => state.users.userInfoState);
     const dispatch = useDispatch();
@@ -102,7 +100,7 @@ const Header = () => {
             navigate('/');
         } else {
             navigate(`/products-search/${newFilters.searchTerm}`);
-            dispatch(searchProductAction(newFilters));
+            dispatch(searchProductAction(newFilters.searchTerm));
         }
     };
 

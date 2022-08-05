@@ -41,13 +41,31 @@ const userSlice = createSlice({
                 error: toast.error(action.payload),
             }
         },
-        // registerAction(state, action) {
-
-        // },
-        // registerActionSuccess(state, action) {
-        // },
-        // registerActionFailed(state, action) {
-        // },
+        registerAction(state, action) {
+            localStorage.removeItem(USER_INFO_KEY)
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true,
+            }
+        },
+        registerActionSuccess(state, action) {
+            const userInfoResponse = { ...action.payload };
+            localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse))
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: false,
+                data: userInfoResponse,
+            }
+        },
+        registerActionFailed(state, action) {
+            console.log("action.payload",action.payload)
+            localStorage.removeItem(USER_INFO_KEY)
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: false,
+                error: toast.error(action.payload),
+            }
+        },
         logoutAction(state, action) {
             console.log('logout')
             localStorage.removeItem(USER_INFO_KEY);
@@ -66,7 +84,7 @@ const userSlice = createSlice({
 
 export const {
     loginAction, loginActionSuccess, loginActionFailed,
-    // registerAction, registerActionSuccess, registerActionFailed,
+    registerAction, registerActionSuccess, registerActionFailed,
     logoutAction,
 } = userSlice.actions
 export const userReducer = userSlice.reducer

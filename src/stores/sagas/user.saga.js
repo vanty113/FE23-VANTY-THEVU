@@ -8,8 +8,9 @@ import { loginAction,
     // logoutAction, 
     // logoutActionFailed, 
     // logoutActionSuccess, 
-    // registerAction, 
-    // registerActionSuccess, 
+    registerAction, 
+    registerActionFailed, 
+    registerActionSuccess, 
 } from '../slices/user.slice.js';
 import { AuthAPI } from '../../api';
 
@@ -28,6 +29,23 @@ function* login(action) {
     }
 }
 
+function* register(action) {
+    try {
+        const loginPayload = action.payload
+        // console.log(action.payload);
+        const response = yield AuthAPI.register({
+            email: loginPayload.email,
+            password: loginPayload.password,
+        });
+        // console.log(response.data.user); 
+        yield put(registerActionSuccess(response.data.user));
+    } catch (e) {
+        console.log("error", e);
+        yield put(registerActionFailed(e.response.data));
+    }
+}
+
 export function* userSaga() {
     yield takeEvery(loginAction, login);
+    yield takeEvery(registerAction, register);
 }

@@ -46,7 +46,7 @@ const Price = styled.span`
 
 const FilterContainer = styled.div`
   width: 50%;
-
+  margin: 10px 0;
 `;
 
 const Filter = styled.div`
@@ -54,7 +54,7 @@ const Filter = styled.div`
 
 const FilterTitle = styled.span`
   font-size: 20px;
-  font-weight: 200;
+  font-weight: 300;
 `;
 
 const FilterSize = styled.select`
@@ -78,7 +78,7 @@ const AmountContainer = styled.div`
 `;
 
 const Amount = styled.span`
-  width: 30px;
+  width: 40px;
   border-radius: 10px;
   border: 1px solid teal;
   margin: 0px 5px;
@@ -109,35 +109,40 @@ const ProductDetail = () => {
     feature: "",
     size: null,
   });
+  
   const [sizeOption, setSizeOption] = useState(28);
   const [amount, setAmount] = useState(1);
 
   const dispatch = useDispatch();
   const { id } = useParams();
-  
+
   useEffect(() => {
     dispatch(fetchProductAction());
   }, [dispatch])
 
   useEffect(() => {
-    const dataDetail = data.find((item)=> item.id == id);
+    const dataDetail = data.find((item) => item.id == id);
     setProductDetail(dataDetail)
-  }, [data])
+  }, [data, id])
 
-   const handleSizeChange = (e) => {
-    setSizeOption(e.target.value)
-   }
+  const handleSizeChange = (e) => {
+    setSizeOption(e.target.value);
+    setProductDetail({
+      ...productDetail,
+      size: e.target.value,
+    })
+  }
 
-   const handleAddAmount = () => {
-    if(amount < 100) {
+  const handleAddAmount = () => {
+    if (amount < 100) {
       setAmount(amount + 1);
     }
-   }
-   const handleRemoveAmount = () => {
-    if(amount > 1) {
+  }
+  const handleRemoveAmount = () => {
+    if (amount > 1) {
       setAmount(amount - 1);
     }
-   }
+  }
   return (
     <AppLayout>
       <Container>
@@ -163,10 +168,10 @@ const ProductDetail = () => {
                 <FilterTitle>Size</FilterTitle>
                 <FilterSize onChange={handleSizeChange} value={sizeOption}>
                   <FilterSizeOption value={28}>28</FilterSizeOption>
-                  <FilterSizeOption  value={29}>29</FilterSizeOption>
+                  <FilterSizeOption value={29}>29</FilterSizeOption>
                   <FilterSizeOption value={30}>30</FilterSizeOption>
                   <FilterSizeOption value={31}>31</FilterSizeOption>
-                  <FilterSizeOption value={32} >32</FilterSizeOption>
+                  <FilterSizeOption value={32}>32</FilterSizeOption>
                   <FilterSizeOption value={33}>33</FilterSizeOption>
                 </FilterSize>
               </Filter>

@@ -2,8 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import './register.scss';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { AppLayout } from "layout/AppLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { registerAction } from "stores/slices/user.slice";
+import { ToastContainer } from "react-toastify";
 
 const schema = yup.object().shape({
     firstName: yup.string()
@@ -25,12 +28,19 @@ const schema = yup.object().shape({
 export default function Register() {
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit } = useForm({ resolver: yupResolver(schema) });
+    const dispatch = useDispatch();
+    const userInfo = useSelector(state => state.users.userInfoState);
 
     const onSubmit = (data) => {
         console.log('data:', data);
-        alert('Register Successful');
-        navigate('/');
+        dispatch(registerAction(data));
+        // alert('Register Successful');
+        // navigate('/');
     }
+    if (userInfo.data) {
+        return <Navigate to={'/'} />
+    }
+
 
     return (<AppLayout>
         <div className="register-page">
@@ -68,6 +78,7 @@ export default function Register() {
                 <div className="errors-message">{errors.address?.message}</div>
 
                 <input className="btn-submit" type="submit" value="Register"  style={{backgroundColor: '#1890ff'}}/>
+                <ToastContainer autoClose={1000} />
             </form>
         </div>
     </AppLayout>)
