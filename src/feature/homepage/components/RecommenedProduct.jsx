@@ -1,5 +1,7 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -62,10 +64,7 @@ const Image = styled.img`
 
 const InfoContainer = styled.div`
     color: #e0e3db;
-    top: 85%;
-    left: 45%;
-    position: absolute;
-    transform: translate(-42%, -52%);
+    margin-top: 10px;
 `;
 
 const Title = styled.h1`
@@ -87,7 +86,7 @@ const P = styled.p`
     margin-bottom: 40px;
 `;
 
-const RecommenedProduct = ({ recommenedProduct }) => {
+const RecommenedProduct = ({ recommenedProduct, loading }) => {
     const [slideIndex, setSlideIndex] = useState(0);
 
     const handleClick = (direction) => {
@@ -98,30 +97,33 @@ const RecommenedProduct = ({ recommenedProduct }) => {
         }
     };
 
-    return (<div>
+    return (<>
         <P>RECOMMENDED FOR YOU</P>
-        <Container>
-            <Arrow direction="left" onClick={() => handleClick("left")}>
-                <ArrowLeftOutlined style={{ fontSize: "50px" }} />
-            </Arrow>
-            <Wrapper slideIndex={slideIndex}>
-                {recommenedProduct.map((item) => (
-                    <Slide key={item.id}>
+        {loading ? <div><LoadingOutlined /></div>
+        : <Container>
+        <Arrow direction="left" onClick={() => handleClick("left")}>
+            <ArrowLeftOutlined style={{ fontSize: "50px" }} />
+        </Arrow>
+        <Wrapper slideIndex={slideIndex}>
+            {recommenedProduct.map((item) => (
+                <Slide key={item.id}>
+                    <Link to={`/products-detail/${item.id}`} style={{ textDecoration: 'none' }}>
                         <ImgContainer>
                             <Image src={item.img} />
-                            <InfoContainer>
-                                <Title>{item.name}</Title>
-                                <Desc>{item.price}$</Desc>
-                            </InfoContainer>
                         </ImgContainer>
-                    </Slide>
-                ))}
-            </Wrapper>
-            <Arrow direction="right" onClick={() => handleClick("right")}>
-                <ArrowRightOutlined style={{ fontSize: "50px" }} />
-            </Arrow>
-        </Container>
-    </div>
+                        <InfoContainer>
+                            <Title>{item.name}</Title>
+                            <Desc>{item.price}$</Desc>
+                        </InfoContainer>
+                    </Link>
+                </Slide>
+            ))}
+        </Wrapper>
+        <Arrow direction="right" onClick={() => handleClick("right")}>
+            <ArrowRightOutlined style={{ fontSize: "50px" }} />
+        </Arrow>
+    </Container>}
+    </>
     );
 };
 

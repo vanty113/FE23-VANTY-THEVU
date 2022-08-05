@@ -12,16 +12,16 @@ export const categoryData = [
     {
         id: 3,
         img: "https://cache.tradeinn.com/images/banners-categorias/10008-peke.jpg",
-        title: "WOMEN'S CLOTHINGS",
+        title: "WOMEN'S CLOTHING",
     },
     {
         id: 4,
-        img: "https://cache.tradeinn.com/images/banners-categorias/10012-peke.jpg",
-        title: "MEN'S CLOTHINGS",
+        img: "https://cache.tradeinn.com/images/banners-categorias/10007-peke.jpg",
+        title: "MEN'S CLOTHING",
     },
     {
         id: 5,
-        img: "https://cache.tradeinn.com/images/banners-categorias/10007-peke.jpg",
-        title: "KID'S CLOTHINGS",
+        img: "https://cache.tradeinn.com/images/banners-categorias/10009-peke.jpg",
+        title: "KID'S CLOTHING",
     },
 ];

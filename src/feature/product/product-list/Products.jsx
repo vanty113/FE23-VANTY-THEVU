@@ -7,6 +7,7 @@ import BoxProduct from "./BoxProduct";
 import { AppLayout } from "layout/AppLayout";
 import { Pagination } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const Container = styled.div`
 
 const AllProducts = () => {
   const productState = useSelector(state => state.product.productState);
-  // console.log(productState);
+  // console.log(productState.data);
   const dispatch = useDispatch();
 
   const page = productState.pagination.page;
@@ -27,8 +28,6 @@ const AllProducts = () => {
   const loading = productState.loading;
 
   useEffect(() => {
-    // Dispatch action gọi product từ server => Slice => action
-    // Nếu có saga đang theo dõi action này thì hàm tương ứng trong saga sẽ chạy => fetchProduct
     dispatch(fetchProductAction(1));
   }, [dispatch]);
 
@@ -40,8 +39,10 @@ const AllProducts = () => {
     {loading ? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div>
       : <>
         <Container>
-          {productState.data.map((item) => (
-            <BoxProduct data={item} key={item.id} />
+          {productState.data.map(item => (
+            <Link to={`/products-detail/${item.id}`} key={item.id} style={{ marginBottom: "10px" }}>
+              <BoxProduct data={item} />
+            </Link>
           ))}
         </Container>
         <Pagination
@@ -52,7 +53,6 @@ const AllProducts = () => {
         />
       </>
     }
-
   </AppLayout>);
 };
 

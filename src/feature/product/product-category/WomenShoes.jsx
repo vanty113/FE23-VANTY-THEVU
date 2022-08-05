@@ -132,7 +132,7 @@ export default function WomenShoes() {
             <H2>Featured products in Women´s shoes</H2>
             {loading ? <div><LoadingOutlined /></div> : <Container2>
                 {productList.map((item) => {
-                    return (<BoxProduct key={item.id} data={item} />)
+                    return (<Link to={`/products-detail/${item.id}`} key={item.id} style={{ textDecoration: 'none', marginBottom: "10px" }}><BoxProduct data={item} /></Link>)
                 })}
             </Container2>}
         </>

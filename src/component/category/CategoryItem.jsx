@@ -1,32 +1,27 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-    flex: 1;
+    width: 500px;
     margin: 3px;
     height: 300px;
-    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: relative;
 `;
 
 const Info = styled.div`
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+
 `;
 
 const Title = styled.h1`
-    color:white;
+    color: white;
     margin-bottom: 20px;
     font-size: 15px;
 `;

@@ -3,9 +3,11 @@ import { categoryData } from "constant/CategoryData";
 import CategoryItem from "./CategoryItem";
 
 const Container = styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
     padding: 20px;
-    justify-content: space-between;
+    justify-content: center;
 `;
 
 const Categories = () => {
