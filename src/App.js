@@ -1,6 +1,10 @@
 import './App.css';
 import * as React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import AdminPage from 'feature/admin';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getListCartAction } from 'stores/slices/cart.slice';
 
 const HomePage = React.lazy(() => import('feature/homepage/HomePage'));
 
@@ -29,11 +33,13 @@ const ProductSearch = React.lazy(() => import('feature/product/product-search/Pr
 const ProductDetail = React.lazy(() => import('feature/product/product-detail/ProductDetail'));
 
 function App() {
+ 
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<React.Suspense fallback={<>Loading...</>}> <HomePage /> </React.Suspense>}/>
+          <Route index element={<React.Suspense fallback={<>Loading...</>}> <HomePage /> </React.Suspense>} />
           <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
           <Route path="/register" element={<React.Suspense fallback={<>Loading...</>}> <Register /> </React.Suspense>} />
           <Route path="/mens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <MensClothing /> </React.Suspense>} />
@@ -46,6 +52,31 @@ function App() {
           <Route path="/all-products" element={<React.Suspense fallback={<>Loading...</>}> <AllProducts /> </React.Suspense>} />
           <Route path="/products-search/:q" element={<React.Suspense fallback={<>Loading...</>}> <ProductSearch /> </React.Suspense>} />
           <Route path="/products-detail/:id" element={<React.Suspense fallback={<>Loading...</>}> <ProductDetail /> </React.Suspense>} />
+          <Route
+            path={"admin"}
+            element={
+              <AdminPage />
+            }
+          >
+            <Route
+              path={"category"}
+              element={
+                <AdminPage />
+              }
+            />
+            <Route
+              path={"product"}
+              element={
+                <AdminPage />
+              }
+            />
+            <Route
+              path={"order"}
+              element={
+                <AdminPage />
+              }
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

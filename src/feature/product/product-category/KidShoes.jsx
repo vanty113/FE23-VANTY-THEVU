@@ -119,14 +119,12 @@ export default function MensClothing() {
                 })}
             </Container1>
             <H2>Featured products in Kid´s shoes</H2>
-            {loading && <div><LoadingOutlined /></div>}
-            {!loading && <Container2>
-                {productList.map((item) => {
-                    return (<Link to={`/products-detail/${item.id}`} key={item.id} style={{ textDecoration: 'none', marginBottom: "10px" }}><BoxProduct data={item} /></Link>)
-                })}
-            </Container2>}
-
-
+            {loading ? <div><LoadingOutlined style={{ fontSize: '30px' }} /></div>
+                : <Container2>
+                    {productList.map((item) => {
+                        return (<Link to={`/products-detail/${item.id}`} key={item.id} style={{ textDecoration: 'none', marginBottom: "10px" }}><BoxProduct data={item} /></Link>)
+                    })}
+                </Container2>}
         </>
     </AppLayout>)
 }

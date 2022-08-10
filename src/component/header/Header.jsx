@@ -1,14 +1,14 @@
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Button } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge } from 'antd';
 import Logos from 'assets/runnerinn.svg';
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logOutCart } from "stores/slices/cart.slice";
 import { searchProductAction } from "stores/slices/product.slice";
 import { logoutAction } from "stores/slices/user.slice";
 import styled from "styled-components";
+import MenuBar from "./menu-bar/MenuBar";
 
 
 const Container = styled.div`
@@ -88,6 +88,7 @@ const MenuItem = styled.div`
 
 const Header = () => {
     const userInfo = useSelector(state => state.users.userInfoState);
+    const cartState = useSelector(state => state.cart.cartState);
     const dispatch = useDispatch();
     const user = userInfo.data;
     const navigate = useNavigate();
@@ -122,16 +123,9 @@ const Header = () => {
 
     const handleLogout = () => {
         dispatch(logoutAction());
+        dispatch(logOutCart())
+        navigate('/login', {replace: true});
     }
-
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
 
     return (
         <Container>
@@ -143,7 +137,7 @@ const Header = () => {
                     <Language>EN</Language>
                     <SearchContainer>
                         <Input value={searchTerm} onChange={handleSearchTermChange} placeholder='Search 1000 products' />
-                        <Search style={{ color: "gray", fontSize: 16 }} />
+                        <SearchOutlined style={{ color: "gray", fontSize: 16 }} />
                     </SearchContainer>
                 </Center>
                 <Right>
@@ -158,7 +152,7 @@ const Header = () => {
                         </>}
                     <Link style={{ textDecoration: "none" }} to='/cart'>
                         <MenuItem>
-                            <Badge count={5}>
+                            <Badge count={cartState.data.length}>
                                 <ShoppingCartOutlined style={{ fontSize: "30px", color: "#fff" }} />
                             </Badge>
                         </MenuItem>
@@ -166,44 +160,7 @@ const Header = () => {
 
                 </Right>
             </Wrapper>
-            <Wrapper style={{ background: '#6596B6' }}>
-                <Button
-                    style={{ color: '#FFFFFF' }}
-                    id="demo-positioned-button"
-                    aria-controls={open ? 'demo-positioned-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    All Catergories
-                </Button>
-                {/* <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'bottom',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                        with: '100%'
-                    }}
-                >
-                    <MenuItem onClick={handleClose}>Adidas</MenuItem>
-                    <MenuItem onClick={handleClose}>Nike</MenuItem>
-                    <MenuItem onClick={handleClose}>Puma</MenuItem>
-                </Menu> */}
-                <Link style={{ textDecoration: "none" }} to="/"><MenuItem>Home</MenuItem></Link>
-                <Link style={{ textDecoration: "none" }} to="/all-products"><MenuItem>All Product</MenuItem></Link>
-                <Link style={{ textDecoration: "none" }} to="/womens-shoes"><MenuItem>Women's shoes</MenuItem></Link>
-                <Link style={{ textDecoration: "none" }} to="/mens-shoes"><MenuItem>Men's shoes</MenuItem></Link>
-                <Link style={{ textDecoration: "none" }} to="/mens-clothing"><MenuItem>Men's clothing</MenuItem></Link>
-                <Link style={{ textDecoration: "none" }} to="/womens-clothing"><MenuItem>Women's clothing</MenuItem></Link>
-            </Wrapper>
+            <MenuBar />
         </Container>
     );
 };

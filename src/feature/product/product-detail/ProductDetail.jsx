@@ -1,11 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
+import { Image } from 'antd';
 import { AppLayout } from "layout/AppLayout";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { addProductToCartAction, getListCartAction } from "stores/slices/cart.slice";
 import { fetchProductAction } from "stores/slices/product.slice";
 import styled from "styled-components";
-import { Image } from 'antd';
 
 
 const Container = styled.div``;
@@ -86,21 +88,33 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid #008080;
-  background-color: #008080;
+  width: 60%;
+  padding: 10px;
+  background-color: #FF652E;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
-  width: 65%;
+  border: none;
+  border-radius: 2px;
+  opacity: 1;
 
   &:hover{
-      background-color: #f8f4f4;
+    opacity: 0.8;
   }
 `;
 
 const ProductDetail = () => {
   const productState = useSelector(state => state.product.productState);
+  const userInfo = useSelector(state => state.users.userInfoState);
+  const user = userInfo.data;
   const data = productState.data;
+  const [amount, setAmount] = useState(1);
+  const [sizeOption, setSizeOption] = useState();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   const [productDetail, setProductDetail] = useState({
     name: "",
     price: null,
@@ -108,13 +122,8 @@ const ProductDetail = () => {
     category: "",
     feature: "",
     size: null,
+    quantity: null,
   });
-  
-  const [sizeOption, setSizeOption] = useState(28);
-  const [amount, setAmount] = useState(1);
-
-  const dispatch = useDispatch();
-  const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchProductAction());
@@ -136,13 +145,37 @@ const ProductDetail = () => {
   const handleAddAmount = () => {
     if (amount < 100) {
       setAmount(amount + 1);
+      setProductDetail({
+        ...productDetail,
+        quantity: amount + 1,
+      })
     }
   }
   const handleRemoveAmount = () => {
     if (amount > 1) {
       setAmount(amount - 1);
+      setProductDetail({
+        ...productDetail,
+        quantity: amount - 1,
+      })
     }
   }
+  // const stringProductDetail = JSON.stringify(productDetail);
+  // const userProductDetail = JSON.stringify(user);
+
+  // const addUsertoProductDetail = 
+  console.log("productDetail", productDetail);
+  const addToCart = () => {
+    productDetail.useremail = user.email;
+    if (!user) {
+      alert("Please login account.")
+      navigate("/login");
+    } else {
+      dispatch(addProductToCartAction(productDetail))
+      dispatch(getListCartAction())
+    }
+  }
+
   return (
     <AppLayout>
       <Container>
@@ -167,6 +200,7 @@ const ProductDetail = () => {
               <Filter>
                 <FilterTitle>Size</FilterTitle>
                 <FilterSize onChange={handleSizeChange} value={sizeOption}>
+                  <FilterSizeOption>Select size</FilterSizeOption>
                   <FilterSizeOption value={28}>28</FilterSizeOption>
                   <FilterSizeOption value={29}>29</FilterSizeOption>
                   <FilterSizeOption value={30}>30</FilterSizeOption>
@@ -176,9 +210,10 @@ const ProductDetail = () => {
                 </FilterSize>
               </Filter>
             </FilterContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={addToCart}>ADD TO CART</Button>
           </InfoContainer>
         </Wrapper>
+        <ToastContainer autoClose={1000} />
       </Container>
     </AppLayout>
   );

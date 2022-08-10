@@ -56,32 +56,48 @@ const productSlice = createSlice({
     },
 
     searchProductAction: (state, action) => {
-      const page = action.payload;
-
       state.productState = {
         ...state.productState,
         loading: true,
-        pagination: {
-          ...state.productState.pagination,
-          page,
-        },
       };
     },
     searchProductActionSuccess: (state, action) => {
-      const { data, totalProduct } = action.payload;
+      const data = action.payload;
       state.productState = {
         ...state.productState,
         data,
         loading: false,
-        pagination: {
-          ...state.productState.pagination,
-          total: +totalProduct,
-          totalPage: totalProduct / PRODUCT_LIMIT,
-        },
       };
     },
     searchProductActionFailed: (state, action) => {
       notification.error(action.payload);
+    },
+
+    addProductAction: (state, action) => {
+      state.productState = {
+        ...state.productState,
+        loading: true,
+      };
+    },
+    addProductActionSuccess: (state, action) => {
+      state.productState = {
+        ...state.productState,
+        data: action.payload,
+        loading: false,
+      };
+    },
+    addProductActionFailed: (state, action) => {
+      notification.error(action.payload);
+    },
+
+    deleteProductAction: (state, action) => {
+
+    },
+    deleteProductActionSuccess: (state, action) => {
+
+    },
+    deleteProductActionFailed: (state, action) => {
+
     },
   },
 });
@@ -93,6 +109,12 @@ export const {
   searchProductAction,
   searchProductActionSuccess,
   searchProductActionFailed,
+  addProductAction,
+  addProductActionSuccess,
+  addProductActionFailed,
+  deleteProductAction,
+  deleteProductActionSuccess,
+  deleteProductActionFailed,
 } = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

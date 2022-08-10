@@ -1,5 +1,11 @@
 import { put, takeEvery, delay } from "redux-saga/effects";
 import {
+  addProductAction,
+  addProductActionFailed,
+  addProductActionSuccess,
+  deleteProductAction,
+  deleteProductActionFailed,
+  deleteProductActionSuccess,
   fetchProductAction,
   fetchProductActionFailed,
   fetchProductActionSuccess,
@@ -32,28 +38,59 @@ function* fetchProduct(action) {
 function* searchProduct(action) {
   try {
     yield delay(1000);
-    console.log(action.payload)
     const response = yield ProductAPI.searchProduct(action.payload);
-    // console.log("response", response.data.length);
-    const productData = response.data;
-    // console.log("productData: ", productData);
-    const totalProduct = response.data.length;
-    // console.log('action.payload', action.payload);
     // Put 1 action đã được định nghĩa ở slice
     yield put(
-      searchProductActionSuccess({
-        data: productData,
-        totalProduct: totalProduct,
-      })
+      searchProductActionSuccess(response.data)
+    );
+  } catch (e) {
+    // Put 1 action đã được định nghĩa ở slice
+    yield put(searchProductActionFailed(e.response.data));
+  }
+}
+
+function* addProduct(action) {
+  try {
+    // console.log("data:", action.payload);
+    // const addPayload = action.payload;
+    const response = yield ProductAPI.addProduct(action.payload);
+    // {
+    //   name: addPayload.name,
+    //   price: addPayload.price,
+    //   img: addPayload.img,
+    //   category: addPayload.category,
+    //   feature: addPayload.feature,
+    //   size: addPayload.size,
+    //   quantity: addPayload.quantity,
+    // }
+    console.log("product:", response);
+    // Put 1 action đã được định nghĩa ở slice
+    yield put(
+      addProductActionSuccess(response.data)
+    );
+  } catch (e) {
+    // Put 1 action đã được định nghĩa ở slice
+    yield put(addProductActionFailed(e.response.data));
+  }
+}
+
+function* deleteProduct(action) {
+  try {
+    const response = yield ProductAPI.deleteProduct(action.payload);
+    // Put 1 action đã được định nghĩa ở slice
+    yield put(
+      deleteProductActionSuccess(response.data)
     );
   } catch (e) {
     // Put 1 action đã được định nghĩa ở slice
     console.log(e);
-    yield put(searchProductActionFailed(e.response.data));
+    yield put(deleteProductActionFailed(e.response.data));
   }
 }
 
 export function* productSaga() {
   yield takeEvery(fetchProductAction, fetchProduct);
   yield takeEvery(searchProductAction, searchProduct);
+  yield takeEvery(addProductAction, addProduct);
+  yield takeEvery(deleteProductAction, deleteProduct);
 }

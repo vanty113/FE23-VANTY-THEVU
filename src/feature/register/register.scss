@@ -1,4 +1,4 @@
-.register-page {
+.register-container {
     border: 2px solid #6596B6;
     border-radius: 5px;
     width: 540px;
@@ -12,11 +12,16 @@
         font-weight: bold;
     }
 
+    form {
+        width: 410px;
+        margin: auto;
+    }
+
     .errors-message {
-        display: flex;
-        justify-content: space-evenly;
         color: red;
         font-size: 13px;
+        text-align: left;
+        margin-left: 10px;
     }
 
     .width-input {
@@ -48,6 +53,7 @@
         cursor: pointer;
         border-radius: 5px;
         padding: 10px 8px;
+
         &:hover {
             box-shadow: 5px 5px 5px 5px #6596B6;
             color: red;

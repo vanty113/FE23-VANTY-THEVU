@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-
 import { loginAction } from "stores/slices/user.slice";
 import * as yup from "yup";
 import './login.scss';
@@ -20,7 +19,6 @@ const schema = yup.object().shape({
 
 export default function Login() {
     const userInfo = useSelector(state => state.users.userInfoState);
-    // console.log("userInfo:", userInfo);
     const dispatch = useDispatch();
 
     const {
@@ -29,13 +27,13 @@ export default function Login() {
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
 
+    const onSubmit = (data) => {
+        dispatch(loginAction(data));
+    };
+
     if (userInfo.data) {
         return <Navigate to={'/'} />
     }
-
-    const onSubmit = (data) => {        
-        dispatch(loginAction(data));
-    };
     return (
         <AppLayout>
             <div className="login-page">
@@ -73,6 +71,7 @@ export default function Login() {
                     </div>
                     <div className="btn-submit"><input type={"submit"} value="Log in" /><ToastContainer autoClose={1000} /></div>
                     Or <Link to="/register">Register now!</Link>
+                    <ToastContainer autoClose={1000} />
                 </form>
             </div>
         </AppLayout >

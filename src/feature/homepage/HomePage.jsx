@@ -14,7 +14,7 @@ export default function HomePage() {
     const loading = productState.loading;
 
     useEffect(() => {
-        dispatch(fetchProductAction(2));
+        dispatch(fetchProductAction(6));
     }, [dispatch]);
 
     return (<>

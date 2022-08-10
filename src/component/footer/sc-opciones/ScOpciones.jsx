@@ -8,31 +8,32 @@ import LogoIg from '../../.././img/ig.svg';
 import LogoYt from '../../.././img/yt.svg';
 import LogoLab from '../../.././img/lab_footer.svg';
 import './opciones.scss';
+import { Link } from "react-router-dom";
 
 export function ScOpciones() {
     return (<div className="sc-opciones">
         <div className="sc-opciones-total">
             <p>ABOUT RUNNERINN</p>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Our team</a></li>
-                <li><a href="#">Our physical store</a></li>
-                <li><a href="#">Terms & conditions</a></li>
-                <li><a href="#">Affiliate programs</a></li>
+                <li><Link to={'/'}>About us</Link></li>
+                <li><Link to={'/'}>Our team</Link></li>
+                <li><Link to={'/'}>Our physical store</Link></li>
+                <li><Link to={'/'}>Terms & conditions</Link></li>
+                <li><Link to={'/'}>Affiliate programs</Link></li>
             <div className="sc-other-shops">
                 <p>OTHER SHOPS</p>
-                    <li><a href="#">Techinn</a></li>
-                    <li><a href="#">Bricoinn</a></li>
-                    <li><a href="#">Outletinn</a></li>
+                    <li><Link to={'/'}>Techinn</Link></li>
+                    <li><Link to={'/'}>Bricoinn</Link></li>
+                    <li><Link to={'/'}>Outletinn</Link></li>
             </div>
         </div>
 
         <div className="sc-opciones-total">
             <p>SHOP WITH CONFIDENCE</p>
-                <li><a href="#">How to place an order?</a></li>
-                <li><a href="#">Shipping and delivery</a></li>
-                <li><a href="#">Payment methods</a></li>
-                <li><a href="#">Safe shopping guarantee</a></li>
-                <li><a href="#">Satisfied or refunded</a></li>
+                <li><Link to={'/'}>How to place an order?</Link></li>
+                <li><Link to={'/'}>Shipping and delivery</Link></li>
+                <li><Link to={'/'}>Payment methods</Link></li>
+                <li><Link to={'/'}>Safe shopping guarantee</Link></li>
+                <li><Link to={'/'}>Satisfied or refunded</Link></li>
             <div className="sc-delivery">
                 <p>SUSTAINABLE DELIVERY</p>
                 <img src={LogoCO2} alt='SUSTAINABLE DELIVERY'/>
@@ -41,13 +42,13 @@ export function ScOpciones() {
 
         <div className="sc-opciones-total">
             <p>CUSTOMER SERVICES</p>
-                <li><a href="#">Order tracking</a></li>
-                <li><a href="#">Contact us</a></li>
-                <li><a href="#">Frequently asked questions</a></li>
-                <li><a href="#">Easy return</a></li>
-                <li><a href="#"><b>Customer testimonials</b></a></li>
+                <li><Link to={'/'}>Order tracking</Link></li>
+                <li><Link to={'/'}>Contact us</Link></li>
+                <li><Link to={'/'}>Frequently asked questions</Link></li>
+                <li><Link to={'/'}>Easy return</Link></li>
+                <li><Link to={'/'}><b>Customer testimonials</b></Link></li>
                 <li>
-                    <a href="#">
+                    <Link to={'/'}>
                         <div className="sc-rate">
                             <p className="sc-number-rate">4.6 / 5</p>
                             <div className="sc-logo-star">
@@ -58,7 +59,7 @@ export function ScOpciones() {
                                 <img src={ImgStar} alt='Customer testimonials'/>
                             </div>
                         </div>
-                    </a>
+                    </Link>
                 </li>
             <div className="sc-logo-verified">
                 <img src={LogoVerified} alt='Verified Reviews'/>

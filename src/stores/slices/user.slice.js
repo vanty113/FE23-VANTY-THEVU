@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { notification } from 'antd';
 import { toast } from 'react-toastify';
+import { PRODUCT_LIMIT } from './product.slice';
 
 const USER_INFO_KEY = 'USER_INFO';
 
@@ -10,6 +12,16 @@ const initialState = {
         data: userInfoFromStorage,
         loading: false,
         error: null,
+        pagination: {
+            // Trang hiện tại
+            page: 1,
+            // Số record trả về trong 1 trang
+            limit: PRODUCT_LIMIT,
+            // Tổng số record từ server
+            total: null,
+            // Tổng số trang
+            totalPage: null,
+        },
     },
 }
 
@@ -26,7 +38,7 @@ const userSlice = createSlice({
         },
         loginActionSuccess(state, action) {
             const userInfoResponse = { ...action.payload };
-            localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse))
+            localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse));
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
@@ -58,7 +70,6 @@ const userSlice = createSlice({
             }
         },
         registerActionFailed(state, action) {
-            console.log("action.payload",action.payload)
             localStorage.removeItem(USER_INFO_KEY)
             state.userInfoState = {
                 ...state.userInfoState,
@@ -66,6 +77,37 @@ const userSlice = createSlice({
                 error: toast.error(action.payload),
             }
         },
+
+        fetchUserRegisterAction: (state, action) => {
+            const page = action.payload;
+
+            state.userInfoState = {
+                ...state.userInfoState,
+                loading: true,
+                pagination: {
+                    ...state.userInfoState.pagination,
+                    page,
+                },
+            };
+        },
+        fetchUserRegisterActionSuccess: (state, action) => {
+            const { data, totalProduct } = action.payload;
+
+            state.userInfoState = {
+                ...state.userInfoState,
+                data,
+                loading: false,
+                pagination: {
+                    ...state.userInfoState.pagination,
+                    total: +totalProduct,
+                    totalPage: totalProduct / PRODUCT_LIMIT,
+                },
+            };
+        },
+        fetchUserRegisterActionFailed: (state, action) => {
+            notification.error(action.payload);
+        },
+
         logoutAction(state, action) {
             console.log('logout')
             localStorage.removeItem(USER_INFO_KEY);
@@ -86,5 +128,8 @@ export const {
     loginAction, loginActionSuccess, loginActionFailed,
     registerAction, registerActionSuccess, registerActionFailed,
     logoutAction,
+    fetchUserRegisterAction,
+    fetchUserRegisterActionSuccess,
+    fetchUserRegisterActionFailed,
 } = userSlice.actions
 export const userReducer = userSlice.reducer

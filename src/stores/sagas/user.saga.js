@@ -1,8 +1,9 @@
 import {
+    delay,
     put,
     takeEvery
 } from 'redux-saga/effects'
-import { loginAction, 
+import { fetchUserRegisterAction, fetchUserRegisterActionFailed, fetchUserRegisterActionSuccess, loginAction, 
     loginActionFailed, 
     loginActionSuccess, 
     // logoutAction, 
@@ -13,6 +14,7 @@ import { loginAction,
     registerActionSuccess, 
 } from '../slices/user.slice.js';
 import { AuthAPI } from '../../api';
+import { toast } from 'react-toastify';
 
 function* login(action) {
     try {
@@ -22,8 +24,8 @@ function* login(action) {
             email: loginPayload.email,
             password: loginPayload.password,
         });
-        // console.log(response.data.user); 
         yield put(loginActionSuccess(response.data.user));
+        return toast.success("Login successfully");
     } catch (e) {
         yield put(loginActionFailed(e.response.data));
     }
@@ -37,15 +39,35 @@ function* register(action) {
             email: loginPayload.email,
             password: loginPayload.password,
         });
-        // console.log(response.data.user); 
         yield put(registerActionSuccess(response.data.user));
+        return toast.success("Register successfully");
     } catch (e) {
         console.log("error", e);
         yield put(registerActionFailed(e.response.data));
     }
 }
 
+function* fetchUserRegister(action) {
+    try {
+      yield delay(1000);
+      const response = yield AuthAPI.fetchUserRegister(action.payload);
+      const productData = response.data;
+      const totalProduct = response.headers["x-total-count"];
+  
+      // Put 1 action đã được định nghĩa ở slice
+      yield put(
+        fetchUserRegisterActionSuccess({
+          data: productData,
+          totalProduct: totalProduct,
+        })
+      );
+    } catch (e) {
+      // Put 1 action đã được định nghĩa ở slice
+      yield put(fetchUserRegisterActionFailed(e.response.data));
+    }
+  }
 export function* userSaga() {
     yield takeEvery(loginAction, login);
     yield takeEvery(registerAction, register);
+    yield takeEvery(fetchUserRegisterAction, fetchUserRegister);
 }

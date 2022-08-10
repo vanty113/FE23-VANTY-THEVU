@@ -1,11 +1,18 @@
-import { Add, Remove } from "@material-ui/icons";
+import { Modal } from "antd";
 import { AppLayout } from "layout/AppLayout";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { CartItem } from "./CartItem";
+import './cart.scss';
+import { logOutCart } from "stores/slices/cart.slice";
 
-const Container = styled.div``;
-
-const Wrapper = styled.div`
-    padding: 20px;
+const Container = styled.div`
+    padding: 20px 0;
+    width: 90%;
+    margin: auto;
 `;
 
 const Title = styled.h1`
@@ -24,190 +31,162 @@ const TopButton = styled.button`
     padding: 10px;
     font-weight: 600;
     cursor: pointer;
+    border-radius: 5px 0 0 10px;
     border: ${(props) => props.type === "filled" && "none"};
     background-color: ${(props) =>
-            props.type === "filled" ? "black" : "transparent"};
+        props.type === "filled" ? "black" : "transparent"};
     color: ${(props) => props.type === "filled" && "white"};
 `;
 
 const Bottom = styled.div`
     display: flex;
-    justify-content: space-between;
-
+    flex-direction: column;
+    align-items: flex-end;
 `;
-
-const Info = styled.div`
-    flex: 3;
-`;
-
-const Product = styled.div`
+const ProductTitle = styled.div`
+    width: 100%;
+    background-color: #E8E8E8;
+    line-height: 40px;
+    font-size: 16px;
+    color: #000000 !important;
+    font-weight: 600;
     display: flex;
-    justify-content: space-between;
+    align-content: center;
 `;
-
-const ProductDetail = styled.div`
-    flex: 2;
-    display: flex;
-`;
-
-const Image = styled.img`
-    width: 200px;
-`;
-
-const Details = styled.div`
-    padding: 20px;
+const InfoProduct = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    width: 100%;
 `;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-// const ProductColor = styled.div`
-//     width: 20px;
-//     height: 20px;
-//     border-radius: 50%;
-//     background-color: ${(props) => props.color};
-// `;
-
-const ProductSize = styled.span``;
-
-const PriceDetail = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-    font-size: 24px;
-    margin: 5px;
-`;
-
-const ProductPrice = styled.div`
-    font-size: 30px;
-    font-weight: 200;
-`;
-
-const Hr = styled.hr`
-    background-color: #eee;
-    border: none;
-    height: 1px;
-`;
-
 const Summary = styled.div`
-    flex: 1;
     border: 0.5px solid lightgray;
     border-radius: 10px;
     padding: 20px;
-    height: 50vh;
+    height: 100%;
+    width: 40%;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+    background-color: #E8E8E8;
 `;
 
-
 const SummaryItem = styled.div`
-    margin: 30px 0px;
+    color: #000000;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     font-weight: ${(props) => props.type === "total" && "500"};
     font-size: ${(props) => props.type === "total" && "24px"};
 `;
 
-const SummaryItemText = styled.span``;
+const SummaryItemText = styled.span`
+    font-size: 16px;
+`;
 
-const SummaryItemPrice = styled.span``;
+const SummaryItemPrice = styled.span`
+    font-size: 19px;
+    font-weight: 800;
+`;
 
 const Button = styled.button`
     width: 100%;
     padding: 10px;
-    background-color: black;
+    background-color: #FF652E;
     color: white;
     font-weight: 600;
     cursor: pointer;
+    border: none;
+    border-radius: 2px;
 `;
 
+const EmptyBasket = styled.div`
+border-bottom: solid 1px #D2D2D2;
+width: 100%;
+font-size: 14px;
+text-align: left;
+color: #E83D3D;
+margin-top: 20px;
+padding-bottom: 20px;
+`;
 const Cart = () => {
+    const cartState = useSelector(state => state.cart.cartState);
+    const dispatch = useDispatch();
+    const [showOrderModal, setShowOrderModal] = useState(false);
+    const { register, handleSubmit } = useForm();
+    const data = cartState.data;
+    console.log("cartState:", cartState.data);
+    const shipment = 10;
+    const productsPrice = data.reduce((prev, current) => prev + (current.quantity * current.price), 0);
+    const total = productsPrice + shipment;
+
+    // const onSubmit = (info) => {
+    //     // data[0].infoUser = info.customer;
+    //     console.log("infoCustomer:", data);
+    // }
     return (
         <AppLayout>
             <Container>
-                <Wrapper>
-                    <Title>SHOPPING BASKET</Title>
-                    <Top>
-                        <TopButton>CONTINUE SHOPPING</TopButton>
-                    </Top>
-                    <Bottom>
-                        <Info>
-                            <Product>
-                                <ProductDetail>
-                                    <Image src="https://www.tradeinn.com/h/13789/137892104/adidas-terrex-speed-flow-trail-running-shoes.jpg" />
-                                    <Details>
-                                        <ProductName>
-                                            <b>Product:</b> Adidas Terrex Speed Trail Running Shoes
-                                        </ProductName>
-                                        <ProductId>
-                                            <b>ID:</b> 88
-                                        </ProductId>
-                                        <ProductSize>
-                                            <b>Size:</b> 36
-                                        </ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add />
-                                        <ProductAmount>1</ProductAmount>
-                                        <Remove />
-                                    </ProductAmountContainer>
-                                    <ProductPrice>44$</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-                            <Hr />
-                            <Product>
-                                <ProductDetail>
-                                    <Image src="https://www.tradeinn.com/h/13842/138423817/adidas-60s-2.0-trainers.jpg" />
-                                    <Details>
-                                        <ProductName>
-                                            <b>Product:</b> Adidas 60S 2.0 Trainers
-                                        </ProductName>
-                                        <ProductId>
-                                            <b>ID:</b> 82
-                                        </ProductId>
-                                        <ProductSize>
-                                            <b>Size:</b> 29
-                                        </ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add />
-                                        <ProductAmount>1</ProductAmount>
-                                        <Remove />
-                                    </ProductAmountContainer>
-                                    <ProductPrice>66$</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-                        </Info>
-                        <Summary>
-                            <SummaryItem>
-                                <SummaryItemText>PRODUCT(S) PRICE</SummaryItemText>
-                                <SummaryItemPrice>$ 80</SummaryItemPrice>
-                            </SummaryItem>
-                            <SummaryItem type="total">
-                                <SummaryItemText>TOTAL</SummaryItemText>
-                                <SummaryItemPrice>$ 80</SummaryItemPrice>
-                            </SummaryItem>
-                            <Button>CHECKOUT NOW</Button>
-                        </Summary>
-                    </Bottom>
-                </Wrapper>
+                <Title>SHOPPING BASKET</Title>
+                <Top>
+                    <Link to={'/'}><TopButton>CONTINUE SHOPPING</TopButton></Link>
+                </Top>
+                <Bottom>
+                    <ProductTitle>
+                        <div style={{ flex: "36%" }}>Product(s)</div>
+                        <div style={{ flex: "16%" }}>Price/Unit</div>
+                        <div style={{ flex: "16%" }}>Quantity</div>
+                        <div style={{ flex: "16%" }}>Amount of money</div>
+                        <div style={{ flex: "16%" }}>Operation</div>
+                    </ProductTitle>
+                    {data.length ?
+                        <InfoProduct>
+                            {cartState?.data?.map(item => (
+                                <CartItem key={item.id} data={item} />
+                            ))}
+                        </InfoProduct>
+                        : <EmptyBasket>There´s nothing in your basket right now.</EmptyBasket>
+                    }
+                    <Summary>
+                        <SummaryItem>
+                            <SummaryItemText>PRODUCT(S) PRICE</SummaryItemText>
+                            <SummaryItemText>$ {productsPrice}</SummaryItemText>
+                        </SummaryItem>
+                        <SummaryItem>
+                            <SummaryItemText>SHIPMENT</SummaryItemText>
+                            {productsPrice ? <SummaryItemText>$ {shipment}</SummaryItemText> : <SummaryItemText>$ 0</SummaryItemText>}
+                        </SummaryItem>
+                        <SummaryItem type="total">
+                            <SummaryItemPrice>TOTAL</SummaryItemPrice>
+                            {productsPrice ? <SummaryItemPrice>$ {total}</SummaryItemPrice> : <SummaryItemPrice>$ 0</SummaryItemPrice>}
+                        </SummaryItem>
+                        <Button onClick={() => dispatch(logOutCart())}>CHECKOUT NOW</Button>
+                    </Summary>
+                </Bottom>
+                {/* {data.length ? <Modal
+                    title="To order, please add a delivery address."
+                    visible={showOrderModal}
+                    onOk={handleSubmit(onSubmit)}
+                    onCancel={() => setShowOrderModal(false)}
+                    okText={"Submit"}
+                >
+                    <form>
+                        <input {...register("customer")} placeholder="Please enter your full name." />
+                        <input {...register("phone")} type="number" placeholder="Please enter your phone." />
+                        <div className="width-input"><input {...register("address")} type="text" placeholder="Please enter your address." /></div>
+                        <textarea rows="4" cols="68" {...register("addressDetail")} placeholder="Please enter your address detail.">
+                        </textarea>
+                    </form>
+                </Modal>
+                    : <Modal
+                        title="Please choose which product to buy."
+                        visible={showOrderModal}
+                        onOk={() => setShowOrderModal(false)}
+                        onCancel={() => setShowOrderModal(false)}
+                        okText={"OK"}
+                    >
+                        <SummaryItemText>
+                            You haven't selected any products to buy yet.
+                        </SummaryItemText>
+                    </Modal>} */}
             </Container>
         </AppLayout>
     );
