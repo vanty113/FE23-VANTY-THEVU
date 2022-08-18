@@ -54,7 +54,7 @@ const H2 = styled.p`
     font-size: 20px;
     font-weight: bold;
     color: #000;
-    margin-top: 25px;
+    margin-top: 125px;
 `;
 
 const P = styled.h1`

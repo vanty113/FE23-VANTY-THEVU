@@ -4,15 +4,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { CartItem } from "./CartItem";
-import './cart.scss';
 import { logOutCart } from "stores/slices/cart.slice";
+import styled from "styled-components";
+import './cart.scss';
+import { CartItem } from "./CartItem";
 
 const Container = styled.div`
     padding: 20px 0;
     width: 90%;
     margin: auto;
+    margin-top: 115px;
 `;
 
 const Title = styled.h1`
@@ -109,19 +110,25 @@ padding-bottom: 20px;
 `;
 const Cart = () => {
     const cartState = useSelector(state => state.cart.cartState);
+    const userInfo = useSelector(state => state.users.userInfoState);
     const dispatch = useDispatch();
+
+    const user = userInfo.data;
+    const data = cartState.data;
+    const productCart = data.filter(item => item.useremail === user.email);
+    // console.log("productCart: ", productCart);
+
     const [showOrderModal, setShowOrderModal] = useState(false);
     const { register, handleSubmit } = useForm();
-    const data = cartState.data;
-    console.log("cartState:", cartState.data);
+
     const shipment = 10;
     const productsPrice = data.reduce((prev, current) => prev + (current.quantity * current.price), 0);
     const total = productsPrice + shipment;
 
-    // const onSubmit = (info) => {
-    //     // data[0].infoUser = info.customer;
-    //     console.log("infoCustomer:", data);
-    // }
+    const onSubmit = (info) => {
+        console.log("infoCustomer:", info);
+        dispatch(logOutCart());
+    }
     return (
         <AppLayout>
             <Container>
@@ -137,9 +144,9 @@ const Cart = () => {
                         <div style={{ flex: "16%" }}>Amount of money</div>
                         <div style={{ flex: "16%" }}>Operation</div>
                     </ProductTitle>
-                    {data.length ?
+                    {productCart.length ?
                         <InfoProduct>
-                            {cartState?.data?.map(item => (
+                            {productCart.map(item => (
                                 <CartItem key={item.id} data={item} />
                             ))}
                         </InfoProduct>
@@ -158,10 +165,10 @@ const Cart = () => {
                             <SummaryItemPrice>TOTAL</SummaryItemPrice>
                             {productsPrice ? <SummaryItemPrice>$ {total}</SummaryItemPrice> : <SummaryItemPrice>$ 0</SummaryItemPrice>}
                         </SummaryItem>
-                        <Button onClick={() => dispatch(logOutCart())}>CHECKOUT NOW</Button>
+                        <Button onClick={() => setShowOrderModal(true)}>CHECKOUT NOW</Button>
                     </Summary>
                 </Bottom>
-                {/* {data.length ? <Modal
+                {data.length ? <Modal
                     title="To order, please add a delivery address."
                     visible={showOrderModal}
                     onOk={handleSubmit(onSubmit)}
@@ -186,7 +193,7 @@ const Cart = () => {
                         <SummaryItemText>
                             You haven't selected any products to buy yet.
                         </SummaryItemText>
-                    </Modal>} */}
+                    </Modal>}
             </Container>
         </AppLayout>
     );

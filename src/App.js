@@ -1,10 +1,8 @@
-import './App.css';
-import * as React from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import AdminPage from 'feature/admin';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getListCartAction } from 'stores/slices/cart.slice';
+import * as React from 'react';
+import { useLayoutEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import './App.css';
 
 const HomePage = React.lazy(() => import('feature/homepage/HomePage'));
 
@@ -32,12 +30,25 @@ const ProductSearch = React.lazy(() => import('feature/product/product-search/Pr
 
 const ProductDetail = React.lazy(() => import('feature/product/product-detail/ProductDetail'));
 
+const Wrapper = ({children}) => {
+  const location = useLocation();
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+  }, [location.pathname]);
+  return children;
+} 
+
 function App() {
- 
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getListCartAction())
+  // }, [dispatch]);
 
   return (
     <div className="App">
       <BrowserRouter>
+        <Wrapper>
         <Routes>
           <Route index element={<React.Suspense fallback={<>Loading...</>}> <HomePage /> </React.Suspense>} />
           <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
@@ -78,6 +89,7 @@ function App() {
             />
           </Route>
         </Routes>
+        </Wrapper>
       </BrowserRouter>
     </div>
   );

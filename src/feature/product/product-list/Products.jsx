@@ -11,10 +11,14 @@ import BoxProduct from "./BoxProduct";
 
 const Container = styled.div`
     width: 100%;
-    padding: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+`;
+
+const ContainerProduct = styled.div`
+  margin-top: 125px;
+  display: block;
 `;
 
 const AllProducts = () => {
@@ -34,6 +38,7 @@ const AllProducts = () => {
   };
 
   return (<AppLayout>
+    <ContainerProduct> </ContainerProduct>
     {loading ? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div>
       : <Container>
         {productState.data.map(item => (
@@ -46,6 +51,12 @@ const AllProducts = () => {
           pageSize={PRODUCT_LIMIT}
           current={page}
           total={total}
+          // style={{
+          //   display: "block",
+          //   position: "fixed",
+          //   bottom: "5%",
+          //   zIndex: "90000"
+          // }}
         />
       </Container>
     }

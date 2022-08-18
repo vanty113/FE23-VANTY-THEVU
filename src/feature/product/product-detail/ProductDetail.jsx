@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { Add, Remove } from "@material-ui/icons";
 import { Image } from 'antd';
 import { AppLayout } from "layout/AppLayout";
@@ -10,7 +11,8 @@ import { fetchProductAction } from "stores/slices/product.slice";
 import styled from "styled-components";
 
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 115px`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -107,10 +109,12 @@ const ProductDetail = () => {
   const productState = useSelector(state => state.product.productState);
   const userInfo = useSelector(state => state.users.userInfoState);
   const user = userInfo.data;
-  const data = productState.data;
+
+  const data = productState?.data;
+  const loading = productState.loading;
+
   const [amount, setAmount] = useState(1);
   const [sizeOption, setSizeOption] = useState();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -130,7 +134,7 @@ const ProductDetail = () => {
   }, [dispatch])
 
   useEffect(() => {
-    const dataDetail = data.find((item) => item.id == id);
+    const dataDetail = data?.find(item => item.id == id);
     setProductDetail(dataDetail)
   }, [data, id])
 
@@ -164,13 +168,13 @@ const ProductDetail = () => {
   // const userProductDetail = JSON.stringify(user);
 
   // const addUsertoProductDetail = 
-  console.log("productDetail", productDetail);
+  // console.log("productDetail", productDetail);
   const addToCart = () => {
-    productDetail.useremail = user.email;
     if (!user) {
       alert("Please login account.")
       navigate("/login");
     } else {
+      productDetail.useremail = user.email;
       dispatch(addProductToCartAction(productDetail))
       dispatch(getListCartAction())
     }
@@ -181,10 +185,12 @@ const ProductDetail = () => {
       <Container>
         <Wrapper>
           <ImgContainer>
-            <Image
-              width={350}
-              src={productDetail?.img}
-            />
+            {loading ? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div>
+              : <Image
+                width={350}
+                src={productDetail?.img}
+              />
+            }
           </ImgContainer>
           <InfoContainer>
             <Title>{productDetail?.name}</Title>

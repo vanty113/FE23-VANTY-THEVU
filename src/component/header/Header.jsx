@@ -15,6 +15,10 @@ const Container = styled.div`
     height: auto;
     width: 100%;
     background: #6596B6;
+    display: block;
+    position: fixed;
+    top: 0;
+    z-index: 99999;
 `;
 
 const Wrapper = styled.div`
@@ -90,8 +94,12 @@ const Header = () => {
     const userInfo = useSelector(state => state.users.userInfoState);
     const cartState = useSelector(state => state.cart.cartState);
     const dispatch = useDispatch();
-    const user = userInfo.data;
     const navigate = useNavigate();
+
+    const user = userInfo.data;
+    const data = cartState.data;
+    // const count = data?.filter(item => item.useremail === user.email);
+    // console.log("count", count);
 
     const [searchTerm, setSearchTerm] = useState('');
     const typingTimeoutRef = useRef(null);
@@ -123,8 +131,8 @@ const Header = () => {
 
     const handleLogout = () => {
         dispatch(logoutAction());
-        dispatch(logOutCart())
-        navigate('/login', {replace: true});
+        dispatch(logOutCart());
+        navigate('/login', { replace: true });
     }
 
     return (
@@ -152,12 +160,11 @@ const Header = () => {
                         </>}
                     <Link style={{ textDecoration: "none" }} to='/cart'>
                         <MenuItem>
-                            <Badge count={cartState.data.length}>
+                            <Badge count={data.length}>
                                 <ShoppingCartOutlined style={{ fontSize: "30px", color: "#fff" }} />
                             </Badge>
                         </MenuItem>
                     </Link>
-
                 </Right>
             </Wrapper>
             <MenuBar />

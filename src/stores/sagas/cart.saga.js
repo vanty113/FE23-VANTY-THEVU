@@ -70,7 +70,7 @@ function* updateProductCart(action) {
         );
     } catch (e) {
         // Put 1 action đã được định nghĩa ở slice
-        console.log("error:", e);
+        // console.log("error:", e);
         yield put(updateProductCartActionFailed(e.response.data));
     }
 }
