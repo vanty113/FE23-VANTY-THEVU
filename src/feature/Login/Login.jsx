@@ -69,9 +69,12 @@ export default function Login() {
                             Forgot password
                         </span>
                     </div>
-                    <div className="btn-submit"><input type={"submit"} value="Log in" /><ToastContainer autoClose={1000} /></div>
+                    <div className="btn-submit"><input type={"submit"} value="Log in" /></div>
                     Or <Link to="/register">Register now!</Link>
-                    <ToastContainer autoClose={1000} />
+                    <ToastContainer
+                        style={{display: "block", position: "fixed", zIndex: "99999"}}
+                        autoClose={1000}
+                    />
                 </form>
             </div>
         </AppLayout >

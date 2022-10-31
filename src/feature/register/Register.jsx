@@ -19,7 +19,6 @@ const schema = yup.object().shape({
         .min(8, 'Password must be at least 8 characters')
         .required('Password is required'),
     retypePassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    // .required('Confirm Password is required'),
     date: yup.string().required('Date of Birth is required'),
     phone: yup.number()
         .required('Phone number is required')
@@ -65,8 +64,8 @@ export default function Register() {
                 <div className="width-input"><input type="number" placeholder="Phone Number" {...register('phone')} /></div>
                 <div className="errors-message">{errors.phone?.message}</div>
 
-                <input type="date" {...register('date')} style={{width: '200px'}} />
-                <select {...register("gender")} style={{width: '185px', height: '40px'}}>
+                <input type="date" {...register('date')} style={{ width: '200px' }} />
+                <select {...register("gender")} style={{ width: '185px', height: '40px' }}>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                     <option value="other">Other</option>
@@ -76,7 +75,10 @@ export default function Register() {
                 <div className="width-input"><input type="text" placeholder="Address" {...register('address')} /></div>
                 <div className="errors-message">{errors.address?.message}</div>
                 <input className="btn-submit" type="submit" value="Register" style={{ backgroundColor: '#1890ff' }} />
-                <ToastContainer autoClose={1000} />
+                <ToastContainer
+                    autoClose={1000}
+                    style={{ display: "block", position: "fixed", zIndex: "99999" }}
+                />
             </form>
         </div>
     </AppLayout>)

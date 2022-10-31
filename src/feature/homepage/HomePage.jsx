@@ -8,7 +8,7 @@ import RecommenedProduct from './components/RecommenedProduct';
 export default function HomePage() {
     const productState = useSelector((state) => state.product.productState);
     const dispatch = useDispatch();
-    
+
     const bestSellerProduct = productState.data.slice(10, 20);
     const recommenedProduct = productState.data.slice(0, 10);
     const loading = productState.loading;
@@ -19,8 +19,8 @@ export default function HomePage() {
 
     return (<>
         <FullLayout>
-            <RecommenedProduct loading ={loading} recommenedProduct={recommenedProduct} />
-            <BestSellersProduct loading ={loading} bestSellerProduct={bestSellerProduct} />
+            <RecommenedProduct loading={loading} recommenedProduct={recommenedProduct} />
+            <BestSellersProduct loading={loading} bestSellerProduct={bestSellerProduct} />
         </FullLayout>
     </>)
 }

@@ -1,7 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { Pagination } from 'antd';
 import { AppLayout } from "layout/AppLayout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProductAction, PRODUCT_LIMIT } from "stores/slices/product.slice";
@@ -24,24 +24,44 @@ const ContainerProduct = styled.div`
 const AllProducts = () => {
   const productState = useSelector(state => state.product.productState);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const page = productState.pagination.page;
   const total = productState.pagination.total;
   const loading = productState.loading;
+  const data = productState.data;
+  const [sortData, setSortData] = useState(data);
 
   useEffect(() => {
-    dispatch(fetchProductAction(1));
-  }, [dispatch]);
+    setSortData(data);
+  }, [data]);
 
-  const onPaginationChange = (page, pageSize) => {
-    dispatch(fetchProductAction(page));
+  useEffect(() => {
+    dispatch(fetchProductAction(currentPage));
+  }, [dispatch, currentPage]);
+
+  const onPaginationChange = (page) => {
+    setCurrentPage(page);
   };
+
+  const SortHighToLow = () => {
+    const array = data.slice().sort((a, b) => b.price - a.price);
+    setSortData(array);
+  }
+
+  const SortLowToHigh = () => {
+    const array = data.slice().sort((a, b) => a.price - b.price);
+    setSortData(array);
+  }
 
   return (<AppLayout>
     <ContainerProduct> </ContainerProduct>
+    <button onClick={SortHighToLow}>Sort Price High To Low</button>
+    <button onClick={SortLowToHigh}>Sort Price Low To High</button>
+    <button onClick={SortLowToHigh}>adidas</button>
     {loading ? <div> <LoadingOutlined style={{ fontSize: '30px', marginTop: '20px' }} /> </div>
       : <Container>
-        {productState.data.map(item => (
+        {sortData.map(item => (
           <Link to={`/products-detail/${item.id}`} key={item.id} style={{ marginBottom: "10px" }}>
             <BoxProduct data={item} />
           </Link>
@@ -51,12 +71,6 @@ const AllProducts = () => {
           pageSize={PRODUCT_LIMIT}
           current={page}
           total={total}
-          // style={{
-          //   display: "block",
-          //   position: "fixed",
-          //   bottom: "5%",
-          //   zIndex: "90000"
-          // }}
         />
       </Container>
     }

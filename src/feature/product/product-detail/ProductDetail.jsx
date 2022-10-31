@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { addProductToCartAction, getListCartAction } from "stores/slices/cart.slice";
+import { addProductToCartAction, getListCartAction, updateProductCartAction } from "stores/slices/cart.slice";
 import { fetchProductAction } from "stores/slices/product.slice";
 import styled from "styled-components";
+import { v4 as uuidv4 } from 'uuid';
 
 
 const Container = styled.div`
@@ -24,11 +25,6 @@ const ImgContainer = styled.div`
   width: 400px;
   flex: 1;
 `;
-
-// const Image = styled.img`
-//   width: 100%;
-//   object-fit: cover;
-// `;
 
 const InfoContainer = styled.div`
   flex: 1;
@@ -108,8 +104,9 @@ const Button = styled.button`
 const ProductDetail = () => {
   const productState = useSelector(state => state.product.productState);
   const userInfo = useSelector(state => state.users.userInfoState);
-  const user = userInfo.data;
+  const cartState = useSelector(state => state.cart.cartState);
 
+  const user = userInfo.data;
   const data = productState?.data;
   const loading = productState.loading;
 
@@ -127,10 +124,14 @@ const ProductDetail = () => {
     feature: "",
     size: null,
     quantity: null,
+    userEmail: ""
   });
-
   useEffect(() => {
     dispatch(fetchProductAction());
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getListCartAction());
   }, [dispatch])
 
   useEffect(() => {
@@ -164,19 +165,31 @@ const ProductDetail = () => {
       })
     }
   }
-  // const stringProductDetail = JSON.stringify(productDetail);
-  // const userProductDetail = JSON.stringify(user);
 
-  // const addUsertoProductDetail = 
-  // console.log("productDetail", productDetail);
   const addToCart = () => {
     if (!user) {
       alert("Please login account.")
       navigate("/login");
+    } else if (!productDetail?.size) {
+      alert("Please choose size product !")
+      return;
     } else {
-      productDetail.useremail = user.email;
-      dispatch(addProductToCartAction(productDetail))
-      dispatch(getListCartAction())
+      const checkProduct = cartState.data.some(item => item.productId == id);
+      const checkProductUser = cartState.data.some(item => item.userEmail === user.email);
+      const productFindId = checkProduct ? cartState.data.find(item => item.productId == id) : null;
+
+      if (checkProduct && checkProductUser && productFindId && productDetail?.size === productFindId?.size) {
+        dispatch(updateProductCartAction({ id: productFindId.id, data: { quantity: productFindId.quantity + productDetail?.quantity } }));
+        dispatch(getListCartAction());
+      } else {
+        let dataParams = {
+          ...productDetail,
+          productId: id, id: uuidv4(),
+          userEmail: user.email,
+        }
+        dispatch(addProductToCartAction(dataParams))
+        dispatch(getListCartAction())
+      }
     }
   }
 
@@ -219,7 +232,13 @@ const ProductDetail = () => {
             <Button onClick={addToCart}>ADD TO CART</Button>
           </InfoContainer>
         </Wrapper>
-        <ToastContainer autoClose={1000} />
+
+        <Wrapper>
+        </Wrapper>
+        <ToastContainer
+          autoClose={1000}
+          style={{ display: "block", position: "fixed", zIndex: "99999" }}
+        />
       </Container>
     </AppLayout>
   );

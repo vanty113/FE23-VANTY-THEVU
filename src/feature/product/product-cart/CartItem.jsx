@@ -33,8 +33,6 @@ justify-content: space-around;
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
-
 const ProductSize = styled.span``;
 
 const PriceDetail = styled.div`
@@ -92,7 +90,6 @@ export function CartItem({ data }) {
         <ProductImg><Image src={data.img} /></ProductImg>
         <Details>
             <ProductName>{data.name}</ProductName>
-            <ProductId>ID: {data.id}</ProductId>
             <ProductSize>Size: {data.size}</ProductSize>
         </Details>
         <ProductPrice>{data.price}$</ProductPrice>

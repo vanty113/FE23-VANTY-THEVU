@@ -30,65 +30,65 @@ const ProductSearch = React.lazy(() => import('feature/product/product-search/Pr
 
 const ProductDetail = React.lazy(() => import('feature/product/product-detail/ProductDetail'));
 
-const Wrapper = ({children}) => {
+const Orders = React.lazy(() => import('feature/product/product-orders/Orders'));
+const OrdersDetail = React.lazy(() => import('feature/product/product-orders/OrdersDetail'));
+
+const Wrapper = ({ children }) => {
   const location = useLocation();
   useLayoutEffect(() => {
     document.documentElement.scrollTo(0, 0);
   }, [location.pathname]);
   return children;
-} 
+}
 
 function App() {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getListCartAction())
-  // }, [dispatch]);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Wrapper>
-        <Routes>
-          <Route index element={<React.Suspense fallback={<>Loading...</>}> <HomePage /> </React.Suspense>} />
-          <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
-          <Route path="/register" element={<React.Suspense fallback={<>Loading...</>}> <Register /> </React.Suspense>} />
-          <Route path="/mens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <MensClothing /> </React.Suspense>} />
-          <Route path="/womens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <WomensClothing /> </React.Suspense>} />
-          <Route path="/kids-clothing" element={<React.Suspense fallback={<>Loading...</>}> <KidsClothing /> </React.Suspense>} />
-          <Route path="/kids-shoes" element={<React.Suspense fallback={<>Loading...</>}> <KidShoes /> </React.Suspense>} />
-          <Route path="/womens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <WomenShoes /> </React.Suspense>} />
-          <Route path="/mens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <MenShoes /> </React.Suspense>} />
-          <Route path="/cart" element={<React.Suspense fallback={<>Loading...</>}> <Cart /> </React.Suspense>} />
-          <Route path="/all-products" element={<React.Suspense fallback={<>Loading...</>}> <AllProducts /> </React.Suspense>} />
-          <Route path="/products-search/:q" element={<React.Suspense fallback={<>Loading...</>}> <ProductSearch /> </React.Suspense>} />
-          <Route path="/products-detail/:id" element={<React.Suspense fallback={<>Loading...</>}> <ProductDetail /> </React.Suspense>} />
-          <Route
-            path={"admin"}
-            element={
-              <AdminPage />
-            }
-          >
+          <Routes>
+            <Route index element={<React.Suspense fallback={<>Loading...</>}> <HomePage /> </React.Suspense>} />
+            <Route path="/login" element={<React.Suspense fallback={<>Loading...</>}> <Login /> </React.Suspense>} />
+            <Route path="/register" element={<React.Suspense fallback={<>Loading...</>}> <Register /> </React.Suspense>} />
+            <Route path="/mens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <MensClothing /> </React.Suspense>} />
+            <Route path="/womens-clothing" element={<React.Suspense fallback={<>Loading...</>}> <WomensClothing /> </React.Suspense>} />
+            <Route path="/kids-clothing" element={<React.Suspense fallback={<>Loading...</>}> <KidsClothing /> </React.Suspense>} />
+            <Route path="/kids-shoes" element={<React.Suspense fallback={<>Loading...</>}> <KidShoes /> </React.Suspense>} />
+            <Route path="/womens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <WomenShoes /> </React.Suspense>} />
+            <Route path="/mens-shoes" element={<React.Suspense fallback={<>Loading...</>}> <MenShoes /> </React.Suspense>} />
+            <Route path="/cart" element={<React.Suspense fallback={<>Loading...</>}> <Cart /> </React.Suspense>} />
+            <Route path="/all-products" element={<React.Suspense fallback={<>Loading...</>}> <AllProducts /> </React.Suspense>} />
+            <Route path="/products-search/:q" element={<React.Suspense fallback={<>Loading...</>}> <ProductSearch /> </React.Suspense>} />
+            <Route path="/products-detail/:id" element={<React.Suspense fallback={<>Loading...</>}> <ProductDetail /> </React.Suspense>} />
+            <Route path="/orders" element={<React.Suspense fallback={<>Loading...</>}> <Orders /> </React.Suspense>} />
+            <Route path="/orders-detail/:id" element={<React.Suspense fallback={<>Loading...</>}> <OrdersDetail /> </React.Suspense>} />
             <Route
-              path={"category"}
+              path={"admin"}
               element={
                 <AdminPage />
               }
-            />
-            <Route
-              path={"product"}
-              element={
-                <AdminPage />
-              }
-            />
-            <Route
-              path={"order"}
-              element={
-                <AdminPage />
-              }
-            />
-          </Route>
-        </Routes>
+            >
+              <Route
+                path={"category"}
+                element={
+                  <AdminPage />
+                }
+              />
+              <Route
+                path={"product"}
+                element={
+                  <AdminPage />
+                }
+              />
+              <Route
+                path={"order"}
+                element={
+                  <AdminPage />
+                }
+              />
+            </Route>
+          </Routes>
         </Wrapper>
       </BrowserRouter>
     </div>

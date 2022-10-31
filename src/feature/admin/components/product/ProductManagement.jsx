@@ -19,7 +19,7 @@ export function ProductManagement() {
   const dispatch = useDispatch();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const defaultPage = 1;
 

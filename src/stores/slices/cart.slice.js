@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 export const CART_LIMIT = 5;
 
@@ -36,16 +37,15 @@ export const cartSlice = createSlice({
         },
         getListCartActionSuccess: (state, action) => {
             const { data, totalProduct } = action.payload;
-
             state.cartState = {
-              ...state.cartState,
-              data,
-              loading: false,
-              pagination: {
-                ...state.cartState.pagination,
-                total: +totalProduct,
-                totalPage: totalProduct / CART_LIMIT,
-              },
+                ...state.cartState,
+                data,
+                loading: false,
+                pagination: {
+                    ...state.cartState.pagination,
+                    total: +totalProduct,
+                    totalPage: totalProduct / CART_LIMIT,
+                },
             };
         },
         getListCartActionFailed: (state, action) => {
@@ -56,21 +56,15 @@ export const cartSlice = createSlice({
                 ...state.cartState,
                 data: action.payload,
                 loading: true,
-              };
+            };
         },
         addProductToCartSuccess: (state, action) => {
+            toast.success("Add to cart successfully");
             state.cartState = {
                 ...state.cartState,
                 data: action.payload,
                 loading: false,
-              };
-        },
-        logOutCart: (state, action) => {
-            state.cartState = {
-                ...state.cartState,
-                data: [],
-                loading: true,
-              };
+            };
         },
         addProductToCartFailed: (state, action) => {
 
@@ -80,7 +74,7 @@ export const cartSlice = createSlice({
 
         },
         updateProductCartActionSuccess: (state, action) => {
-
+            toast.success("Add to cart successfully");
         },
         updateProductCartActionFailed: (state, action) => {
 
@@ -90,11 +84,18 @@ export const cartSlice = createSlice({
 
         },
         deleteProductCartActionSuccess: (state, action) => {
-
+            // toast.success("Delete product successfully");
         },
         deleteProductCartActionFailed: (state, action) => {
 
-        }
+        },
+        logOutCart: (state, action) => {
+            state.cartState = {
+                ...state.cartState,
+                data: [],
+                loading: true,
+            };
+        },
     },
 })
 

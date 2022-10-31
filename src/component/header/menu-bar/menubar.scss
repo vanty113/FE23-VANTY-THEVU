@@ -1,20 +1,33 @@
-.ant-menu-horizontal{
+.ant-menu-horizontal {
     background-color: #6596B6;
     font-size: 17px;
+
     &>.ant-menu-item a {
         color: #FFFFFF;
         padding: 0 20px;
         opacity: 1;
+
         &:hover {
             color: #FFFFFF;
             opacity: 0.7;
         }
     }
 }
+
 .ant-menu-title-content {
     color: #FFFFFF;
 }
+
 .ant-menu-overflow {
     align-items: center;
     justify-content: space-between;
+}
+
+@media only screen and (max-width: 426px) {
+    .ant-menu-horizontal {
+        font-size: 11px;
+    }
+    .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu {
+        padding: 0;
+    }
 }

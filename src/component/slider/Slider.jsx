@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { sliderData } from "constant/SilderData";
 
 const Container = styled.div`
-    width: 100%;
+    min-width: 100%;
     height: 450px;
     display: flex;
     position: relative;
     overflow: hidden;
+    margin-top: 115px;
 `;
 
 const Arrow = styled.div`

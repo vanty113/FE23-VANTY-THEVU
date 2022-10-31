@@ -9,7 +9,7 @@ import BoxProduct from "../product-list/BoxProduct";
 
 const Container = styled.div`
     width: 100%;
-    padding: 20px;
+    margin-top: 125px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

@@ -1,6 +1,5 @@
 import { CartAPI } from "api";
-import { toast } from "react-toastify";
-import { put, takeEvery, delay } from "redux-saga/effects";
+import { delay, put, takeEvery } from "redux-saga/effects";
 import {
     addProductToCartAction,
     addProductToCartFailed,
@@ -40,7 +39,6 @@ function* addProductToCart(action) {
         const response = yield CartAPI.addCart(action.payload);
         // Put 1 action đã được định nghĩa ở slice
         yield put(addProductToCartSuccess(response.data));
-        return toast.success("Add to cart successfully")
     } catch (e) {
         // Put 1 action đã được định nghĩa ở slice
         console.log("e:", e);

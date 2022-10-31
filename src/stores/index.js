@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { mySaga } from "./sagas";
 import { cartReducer } from "./slices/cart.slice";
+import { ordersReducer } from "./slices/orders.slice";
 import { productReducer } from "./slices/product.slice";
 import { userReducer } from "./slices/user.slice";
 
@@ -14,6 +15,7 @@ const rootReducer = {
     users: userReducer,
     product: productReducer,
     cart: cartReducer,
+    orders: ordersReducer,
 }
 
 export const appStore = configureStore({
