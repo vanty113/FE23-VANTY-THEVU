@@ -145,6 +145,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const user = userInfo.data;
+    // console.log('user', user);
 
     useEffect(() => {
         if (cartState.data.length >= 0) {
@@ -184,7 +185,7 @@ const Header = () => {
     const handleLogout = () => {
         dispatch(logoutAction());
         dispatch(logOutCart());
-        navigate('/login', { replace: true });
+        navigate('/login');
     }
 
     return (

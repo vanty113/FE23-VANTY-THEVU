@@ -30,10 +30,11 @@ export default function Login() {
     const onSubmit = (data) => {
         dispatch(loginAction(data));
     };
-
-    if (userInfo.data) {
+    const user = userInfo.data;
+    if (user?.email) {
         return <Navigate to={'/'} />
     }
+    // console.log('user', user);
     return (
         <AppLayout>
             <div className="login-page">

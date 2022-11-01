@@ -120,7 +120,7 @@ const Cart = () => {
 
     const user = userInfo.data;
     const data = cartState.data;
-    const productCart = data.filter(item => item.userEmail === user.email);
+    const productCart = data.filter(item => item.userEmail === user?.email);
 
     const shipment = 10;
     const productsPrice = data.reduce((prev, current) => prev + (current.quantity * current.price), 0);

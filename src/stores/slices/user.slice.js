@@ -9,7 +9,8 @@ const userInfoFromStorage = localStorage.getItem(USER_INFO_KEY) ? JSON.parse(loc
 
 const initialState = {
     userInfoState: {
-        data: userInfoFromStorage,
+        token: userInfoFromStorage,
+        data: null,
         loading: false,
         error: null,
         pagination: {
@@ -37,12 +38,14 @@ const userSlice = createSlice({
             }
         },
         loginActionSuccess(state, action) {
-            const userInfoResponse = { ...action.payload };
-            localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse));
+            const {token, user} = action.payload;
+            // console.log("userInfo",user);
+            localStorage.setItem(USER_INFO_KEY, JSON.stringify(token));
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
-                data: userInfoResponse,
+                token: token,
+                data: user,
             }
         },
         loginActionFailed(state, action) {
@@ -62,7 +65,7 @@ const userSlice = createSlice({
         },
         registerActionSuccess(state, action) {
             const userInfoResponse = { ...action.payload };
-            localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse))
+            // localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfoResponse))
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
@@ -70,7 +73,7 @@ const userSlice = createSlice({
             }
         },
         registerActionFailed(state, action) {
-            localStorage.removeItem(USER_INFO_KEY)
+            // localStorage.removeItem(USER_INFO_KEY)
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
@@ -114,7 +117,8 @@ const userSlice = createSlice({
             state.userInfoState = {
                 ...state.userInfoState,
                 loading: false,
-                data: null
+                data: null,
+                token: null,
             }
         },
         // logoutActionSuccess(state, action) {

@@ -18,13 +18,17 @@ import {
 
 function* login(action) {
     try {
+        // console.log("payload",action.payload);
         const loginPayload = action.payload;
-
         const response = yield AuthAPI.login({
             email: loginPayload.email,
             password: loginPayload.password,
         });
-        yield put(loginActionSuccess(response.data.user));
+        const token = response.data.accessToken;
+        const user = response.data.user;
+        // console.log("response",token,user);
+        yield put(loginActionSuccess({token, user}));
+        // console.log("token",response.data.accessToken);
     } catch (e) {
         yield put(loginActionFailed(e.response.data));
     }
